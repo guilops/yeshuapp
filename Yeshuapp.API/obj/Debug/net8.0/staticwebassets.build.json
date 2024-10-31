@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "LsAuUMOqnu8pPEtLth9IIURjkrEJvCc3hrI2xWPxzuE=",
+  "Source": "Yeshuapp.API",
+  "BasePath": "_content/Yeshuapp.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
