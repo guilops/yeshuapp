@@ -3,20 +3,72 @@
   "WorkspaceRootPath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp\\controllers\\irmaoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|solutionrelative:yeshuapp\\controllers\\irmaoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\produtos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\produtos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp\\entities\\clientesentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|solutionrelative:yeshuapp\\entities\\clientesentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\produtos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\produtos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp\\dtos\\clientedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|solutionrelative:yeshuapp\\dtos\\clientedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\produtos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\produtos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}|Yeshuapp\\Yeshuapp.API.csproj|solutionrelative:yeshuapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\produtos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\produtos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\notify.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\notify.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\irmaos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\irmaos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\irmaos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\irmaos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\irmaos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\irmaos\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\irmaos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\irmaos\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\services\\pedidosservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\services\\pedidosservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|c:\\users\\guilherme.santos\\source\\repos\\pocs\\yeshuapp\\yeshuapp.web\\pages\\pedidos\\notify.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC03015C-F6BD-4973-887B-37B925795214}|Yeshuapp.Web\\Yeshuapp.Web.csproj|solutionrelative:yeshuapp.web\\pages\\pedidos\\notify.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,54 +90,223 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Index.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Produtos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Index.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Produtos\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:54:07.982Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ClientesEntity.cs",
-              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Entities\\ClientesEntity.cs",
-              "RelativeDocumentMoniker": "Yeshuapp\\Entities\\ClientesEntity.cs",
-              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Entities\\ClientesEntity.cs",
-              "RelativeToolTip": "Yeshuapp\\Entities\\ClientesEntity.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA4AAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T15:02:01.275Z",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Produtos\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Edit.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Produtos\\Edit.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:54:02.828Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ClienteDto.cs",
-              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Dtos\\ClienteDto.cs",
-              "RelativeDocumentMoniker": "Yeshuapp\\Dtos\\ClienteDto.cs",
-              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Dtos\\ClienteDto.cs",
-              "RelativeToolTip": "Yeshuapp\\Dtos\\ClienteDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAoAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T18:23:08.14Z",
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Produtos\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Delete.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Produtos\\Delete.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:53:57.996Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Program.cs",
-              "RelativeDocumentMoniker": "Yeshuapp\\Program.cs",
-              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Program.cs",
-              "RelativeToolTip": "Yeshuapp\\Program.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T15:33:10.5Z",
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Create.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Produtos\\Create.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Produtos\\Create.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Produtos\\Create.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:53:53.828Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IrmaosController.cs",
-              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Controllers\\IrmaosController.cs",
-              "RelativeDocumentMoniker": "Yeshuapp\\Controllers\\IrmaosController.cs",
-              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Controllers\\IrmaosController.cs",
-              "RelativeToolTip": "Yeshuapp\\Controllers\\IrmaosController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAQwBIAAAAfAAAA",
+              "DocumentIndex": 6,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Edit.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Edit.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:53:37.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Delete.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Delete.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:53:30.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Create.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Create.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Create.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Create.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:53:27.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Index.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Irmaos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Index.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Irmaos\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:49:51.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Create.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Irmaos\\Create.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Create.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Irmaos\\Create.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:49:25.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Index.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Index.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:21:44.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Index.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Index.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:14:28.848Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Notify.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T14:30:46.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Irmaos\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Delete.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Irmaos\\Delete.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:49:32.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Irmaos\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Irmaos\\Edit.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Irmaos\\Edit.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:49:47.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAADUAAAAAAAAAAAAUwEkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:16:33.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PedidosServices.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Services\\PedidosServices.cs",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Services\\PedidosServices.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Services\\PedidosServices.cs",
+              "RelativeToolTip": "Yeshuapp.Web\\Services\\PedidosServices.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAD4vy0AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T14:59:50.111Z",
+              "WhenOpened": "2024-11-01T15:13:09.063Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Notify.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml.cs",
+              "RelativeDocumentMoniker": "Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml.cs",
+              "RelativeToolTip": "Yeshuapp.Web\\Pages\\Pedidos\\Notify.cshtml.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAwwCkAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-01T15:10:37.859Z",
               "EditorCaption": ""
             }
           ]

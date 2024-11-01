@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tlcf89outsiY9bUXky6BeiSKDMkAfjQ5BSlaknU6qM7rRZK3UyLQDN5AV2XQjP0FWYieUqx+YHd24ayIuZacSw==",
+  "dgSpecHash": "qDXZuF4hXepSDGzBazz/xputn3eXY0Qco78FuqjE65lIbLt0pkxSapmk1CQHwpHR8WCsTBDNcNnGc4KqnR/qTA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Yeshuapp.API.csproj",
+  "projectFilePath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.API\\Yeshuapp.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.10\\microsoft.entityframeworkcore.8.0.10.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.10\\microsoft.entityframeworkcore.abstractions.8.0.10.nupkg.sha512",

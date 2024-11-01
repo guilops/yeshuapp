@@ -47,6 +47,7 @@ namespace Yeshuapp.Controllers
                 Nome = produto.Nome,
                 Quantidade = produto.Quantidade,
                 Valor = produto.Valor,
+                Imagem = produto.Imagem
             };
             _context.Produtos.Add(produtoEntity);
             await _context.SaveChangesAsync();
@@ -79,7 +80,7 @@ namespace Yeshuapp.Controllers
 
             if (produtoEntity is null) return NotFound("Produto não localizado");
 
-            var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido);
+            var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido == API.Enums.EStatusPedido.Aberto);
 
             if (pedidosExistentes)
                 return BadRequest("Não é possível excluir o produto, pois existem pedidos ativos associados a ele.");

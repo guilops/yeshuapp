@@ -42,8 +42,44 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXJtYW9zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Pedidos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVkaWRvc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Pedidos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVkaWRvc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Pedidos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVkaWRvc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Pedidos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVkaWRvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Pedidos/Notify.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVkaWRvc1xOb3RpZnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Produtos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHV0b3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Produtos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHV0b3NcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Produtos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHV0b3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Produtos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHV0b3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilherme.santos/source/repos/POCS/Yeshuapp/Yeshuapp.Web/Pages/Shared/_ValidationScriptsPartial.cshtml]

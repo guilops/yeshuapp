@@ -1,0 +1,121 @@
+﻿@page
+@model CreateModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Novo Pedido";
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<body>
+    <div class="container">
+        <h2 class="mb-2 text-center" style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #4A4A4A;">Novo</h2>
+
+        <form method="post" id="createForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Pedido.CodigoCliente">Cliente</label>
+                <select asp-for="Pedido.CodigoCliente" asp-items="Model.Irmaos" class="form-control" required>
+                    <option value="">Selecione um cliente</option>
+                </select>
+                <span asp-validation-for="Pedido.CodigoCliente" class="text-danger"></span>
+            </div>
+
+            <!-- Seleção dos Produtos e Quantidade -->
+            <div class="form-group">
+                <label>Produtos</label>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço Unitário</th>
+                            <th>Subtotal</th>
+                            <th>Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Produtos.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.Produtos[i].Nome</td>
+                                <td>
+                                    <input type="number" name="Pedido.Produtos[@i].Quantidade" class="form-control quantidade-produto" min="0" value="0" onchange="calcularTotal(this, @i)" />
+                                    <input type="hidden" name="Pedido.Produtos[@i].Id" value="@Model.Produtos[i].Id" />
+                                    <input type="hidden" name="Pedido.Produtos[@i].Valor" value="@Model.Produtos[i].Valor" />
+                                </td>
+                                <td>@Model.Produtos[i].Valor.ToString("C")</td>
+                                <td class="subtotal">@Model.Produtos[i].Valor.ToString("C")</td>
+                                <td>
+                                    <input type="number" name="Produtos[@i].Quantidade" class="form-control quantidade-produto-estoque" min="0"
+                                           value="@Model.Produtos[i].Quantidade" readonly />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Valor Total -->
+            <div class="form-group">
+                <label>Valor Total</label>
+                <input asp-for="Pedido.Valor" id="valorTotal" class="form-control" readonly />
+                <span asp-validation-for="Pedido.Valor" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a asp-page="/Pedidos/Index" class="btn btn-outline-primary">Voltar</a>
+            </div>
+        </form>
+    </div>
+
+    @section Scripts {
+        <script>
+            function calcularTotal(input, index) {
+                let total = 0;
+                const produtos = document.querySelectorAll('.quantidade-produto');
+
+                // Obter a quantidade anterior do estoque apenas para o produto que está sendo alterado
+                const estoqueInput = document.querySelector(`input[name="Produtos[${index}].Quantidade"]`);
+                const estoque = parseInt(estoqueInput.value) || 0;
+                const quantidadeAnterior = parseInt(input.dataset.quantidadeAnterior) || 0; // Usar data attribute para armazenar quantidade anterior
+
+                produtos.forEach((prodInput, idx) => {
+                    const quantidade = parseInt(prodInput.value) || 0;
+                    const valor = parseFloat(document.querySelector(`input[name="Pedido.Produtos[${idx}].Valor"]`).value) || 0;
+                    const subtotal = quantidade * valor;
+                    document.querySelectorAll('.subtotal')[idx].innerText = subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    total += subtotal;
+
+                    // Lógica para atualizar apenas o estoque do produto que está sendo alterado
+                    if (idx === index) { // Verifica se é o índice do produto que está sendo alterado
+                        // Calcular a diferença entre a nova quantidade e a quantidade anterior
+                        const diferenca = quantidade - quantidadeAnterior;
+
+                        if (quantidade > estoque) {
+                            prodInput.value = estoque; // Se a quantidade for maior que o estoque, redefine para o valor máximo
+                            alert("A quantidade solicitada excede o estoque disponível!");
+                        } else {
+                            estoqueInput.value = estoque - diferenca; // Atualiza a quantidade do estoque com a diferença
+                        }
+
+                        // Atualiza o data attribute com a nova quantidade
+                        prodInput.dataset.quantidadeAnterior = quantidade;
+                    }
+                });
+
+                // Atualizar o valor total
+                document.querySelector('input[name="Pedido.Valor"]').value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            }
+        </script>
+    }
+
+</body>
+</html>

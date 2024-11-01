@@ -90,10 +90,10 @@ namespace Yeshuapp.Controllers
 
             if (clienteEntity is null) return NotFound("Irmão não localizado");
 
-            var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido);
+            var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido == API.Enums.EStatusPedido.Aberto);
 
             if (pedidosExistentes)
-                return BadRequest("Não é possível excluir o irmção, pois existem pedidos ativos associados a ele.");
+                return BadRequest("Não é possível excluir o irmão, pois existem pedidos em aberto associados a ele.");
 
             _context.Clientes.Remove(clienteEntity);
             await _context.SaveChangesAsync();

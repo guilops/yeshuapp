@@ -23,22 +23,35 @@ namespace Yeshuapp.Controllers
         public async Task<IActionResult> ListarPedidos()
         {
             var pedidos = await _context.Pedidos
-               .Include(p => p.PedidoProdutos)
-               .ThenInclude(pp => pp.Produto)
-               .Include(p => p.Cliente)
-               .Select(p => new PedidoResponseDto
-               {
-                   Id = p.Id,
-                   CodigoCliente = p.Cliente.Id,
-                   Data = p.Data,
-                   StatusPedido = p.StatusPedido,
-                   Valor = p.Valor,
-                   Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
-                   {
-                       Id = pp.ProdutoId,
-                       Quantidade = pp.Quantidade
-                   }).ToList()
-               }).ToListAsync();
+                .Include(p => p.PedidoProdutos)
+                .ThenInclude(pp => pp.Produto)
+                .Include(p => p.Cliente)
+                .Select(p => new PedidoResponseDto
+                {
+                    Id = p.Id,
+                    CodigoCliente = p.Cliente.Id,
+                    Data = p.Data,
+                    StatusPedido = p.StatusPedido,
+                    Valor = p.Valor,
+                    Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
+                    {
+                        Id = pp.ProdutoId,
+                        Quantidade = pp.Quantidade,
+                        Produto = new ProdutoDto
+                        {
+                            Valor = pp.Produto.Valor,
+                            Nome = pp.Produto.Nome,
+                            Quantidade = pp.Produto.Quantidade
+                        }
+
+                    }).ToList(),
+                    Cliente = new ClienteDto
+                    {
+                        Nome = p.Cliente.Nome,
+                        TelefoneCelular = p.Cliente.TelefoneCelular,
+                        Email = p.Cliente.Email,
+                    }
+                }).ToListAsync();
 
             if (!pedidos.Any()) return NotFound();
 
@@ -63,8 +76,21 @@ namespace Yeshuapp.Controllers
                     Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
                     {
                         Id = pp.ProdutoId,
-                        Quantidade = pp.Quantidade
-                    }).ToList()
+                        Quantidade = pp.Quantidade,
+                        Produto = new ProdutoDto
+                        {
+                            Valor = pp.Produto.Valor,
+                            Nome = pp.Produto.Nome,
+                            Quantidade = pp.Produto.Quantidade
+                        }
+
+                    }).ToList(),
+                    Cliente = new ClienteDto
+                    {
+                        Nome = p.Cliente.Nome,
+                        TelefoneCelular = p.Cliente.TelefoneCelular,
+                        Email = p.Cliente.Email,
+                    }
                 })
                 .FirstOrDefaultAsync();
 
@@ -92,7 +118,7 @@ namespace Yeshuapp.Controllers
                 if (produtoExistente.Quantidade < produtoPedido.Quantidade)
                     return BadRequest("Estoque insuficiente para o produto.");
 
-                produtoExistente.Quantidade -= produtoPedido.Quantidade;
+                produtoExistente.Quantidade -= produtoPedido.Produto.Quantidade;
 
                 valorProdutosSomados += pedido.Produtos.Where(x=> x.Id == produtoExistente.Id).Sum(x => x.Quantidade * produtoExistente.Valor);
 
@@ -105,7 +131,7 @@ namespace Yeshuapp.Controllers
             {
                 Cliente = clienteEntity,
                 Data = pedido.Data,
-                StatusPedido = true,
+                StatusPedido = API.Enums.EStatusPedido.Aberto,
                 Valor = pedido.Valor,
                 PedidoProdutos = pedido.Produtos
                     .Select(dto => new PedidoProdutoEntity
@@ -118,7 +144,6 @@ namespace Yeshuapp.Controllers
 
             _context.Pedidos.Add(pedidoEntity);
             await _context.SaveChangesAsync();
-
 
             var pedidoConsulta = await _context.Pedidos
                 .Include(p => p.PedidoProdutos)
@@ -135,8 +160,21 @@ namespace Yeshuapp.Controllers
                     Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
                     {
                         Id = pp.ProdutoId,
-                        Quantidade = pp.Quantidade
-                    }).ToList()
+                        Quantidade = pp.Quantidade,
+                        Produto = new ProdutoDto
+                        {
+                            Valor = pp.Produto.Valor,
+                            Nome = pp.Produto.Nome,
+                            Quantidade = pp.Produto.Quantidade
+                        }
+
+                    }).ToList(),
+                    Cliente = new ClienteDto
+                    {
+                        Nome = p.Cliente.Nome,
+                        TelefoneCelular = p.Cliente.TelefoneCelular,
+                        Email = p.Cliente.Email,
+                    }
                 })
                 .FirstOrDefaultAsync();
 
@@ -144,6 +182,107 @@ namespace Yeshuapp.Controllers
                 return StatusCode(500,"Não foi possivel cadastrar o pedido");
 
             return Created($"/pedidos/{pedidoConsulta.Id}", pedidoConsulta);
+
+        }
+
+        [HttpPut("/pedidos/{id:int}")]
+        public async Task<IActionResult> EditarPedido(int id, PedidoDto pedido)
+        {
+            var clienteEntity = _context.Clientes.FirstOrDefault(x => x.Id == pedido.CodigoCliente);
+            if (clienteEntity == null) return NotFound("Cliente informado não localizado");
+
+            decimal valorProdutosSomados = 0;
+
+            foreach (var produtoPedido in pedido.Produtos)
+            {
+                var produtoExistente = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == produtoPedido.Id);
+
+                if (produtoExistente == null)
+                    return NotFound($"Produto com ID {produtoPedido.Id} não encontrado.");
+
+                if (produtoExistente.Quantidade < produtoPedido.Quantidade)
+                    return BadRequest("Estoque insuficiente para o produto solicitado.");
+
+                produtoExistente.Quantidade -= produtoPedido.Quantidade;
+
+                valorProdutosSomados += pedido.Produtos.Where(x => x.Id == produtoExistente.Id).Sum(x => x.Quantidade * produtoExistente.Valor);
+
+            }
+
+            if (Math.Round(valorProdutosSomados, 2) != Math.Round(pedido.Valor, 2))
+                return BadRequest("Valor do Pedido diferente da soma dos produtos incluídos.");
+
+            var pedidoEntity = new PedidosEntity
+            {
+                Id = id,
+                Cliente = clienteEntity,
+                Data = pedido.Data,
+                StatusPedido = pedido.StatusPedido,
+                Valor = pedido.Valor,
+                PedidoProdutos = pedido.Produtos
+                    .Select(dto => new PedidoProdutoEntity
+                    {
+                        ProdutoId = dto.Id,
+                        Quantidade = dto.Quantidade
+                    })
+                    .ToList()
+            };
+
+            _context.Pedidos.Add(pedidoEntity);
+            await _context.SaveChangesAsync();
+
+            var pedidoConsulta = await _context.Pedidos
+                .Include(p => p.PedidoProdutos)
+                .ThenInclude(pp => pp.Produto)
+                .Include(p => p.Cliente)
+                .Where(p => p.Id == pedidoEntity.Id)
+                .Select(p => new PedidoResponseDto
+                {
+                    Id = p.Id,
+                    CodigoCliente = p.Cliente.Id,
+                    Data = p.Data,
+                    StatusPedido = p.StatusPedido,
+                    Valor = p.Valor,
+                    Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
+                    {
+                        Id = pp.ProdutoId,
+                        Quantidade = pp.Quantidade,
+                        Produto = new ProdutoDto
+                        {
+                            Valor = pp.Produto.Valor,
+                            Nome = pp.Produto.Nome,
+                            Quantidade = pp.Produto.Quantidade
+                        }
+                        
+                    }).ToList(),
+                    Cliente = new ClienteDto
+                    {
+                        Nome = p.Cliente.Nome,
+                        TelefoneCelular = p.Cliente.TelefoneCelular,
+                        Email = p.Cliente.Email,
+                    }
+                })
+                .FirstOrDefaultAsync();
+
+            if (pedidoConsulta == null)
+                return StatusCode(500, "Não foi possivel atualizar o pedido");
+
+            return Ok(pedidoConsulta);
+
+        }
+
+        [HttpDelete("/pedidos/{id:int}")]
+        public async Task<IActionResult> DeletarPedido(int codPedido)
+        {
+            var pedidoEntity = _context.Pedidos.FirstOrDefault(x => x.Id == codPedido);
+            if (pedidoEntity == null) return NotFound("Pedido informado não localizado");
+
+            pedidoEntity.StatusPedido = API.Enums.EStatusPedido.Fechado;
+
+            _context.Pedidos.Update(pedidoEntity);
+            await _context.SaveChangesAsync();
+
+            return Ok("Pedido encerrado com sucesso");
 
         }
     }

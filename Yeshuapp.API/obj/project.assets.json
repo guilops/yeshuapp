@@ -1034,11 +1034,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Yeshuapp.API.csproj",
+      "projectUniqueName": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.API\\Yeshuapp.API.csproj",
       "projectName": "Yeshuapp.API",
-      "projectPath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\Yeshuapp.API.csproj",
+      "projectPath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.API\\Yeshuapp.API.csproj",
       "packagesPath": "C:\\Users\\guilherme.santos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp\\obj\\",
+      "outputPath": "C:\\Users\\guilherme.santos\\source\\repos\\POCS\\Yeshuapp\\Yeshuapp.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\guilherme.santos\\AppData\\Roaming\\NuGet\\NuGet.Config",

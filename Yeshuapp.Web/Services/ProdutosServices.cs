@@ -1,4 +1,6 @@
-﻿using Yeshuapp.Web.Dtos;
+﻿using Newtonsoft.Json;
+using System.Text;
+using Yeshuapp.Web.Dtos;
 
 public class ProdutosServices
 {
@@ -9,39 +11,32 @@ public class ProdutosServices
         _httpClient = httpClient;
     }
 
-    public async Task<List<ProdutoDto>> GetClientesAsync()
+    public async Task<HttpResponseMessage> GetProdutosAsync()
     {
-        var response = await _httpClient.GetAsync("https://localhost:44337/produtos");
-
-        if (!response.IsSuccessStatusCode)
-            return new List<ProdutoDto>();
-
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<ProdutoDto>>();
+       return await _httpClient.GetAsync("https://localhost:44337/produtos");
     }
 
-    public async Task<ProdutoDto> GetClienteByIdAsync(int id)
+    public async Task<HttpResponseMessage> GetProdutoByIdAsync(int id)
     {
-        var response = await _httpClient.GetAsync($"https://localhost:44337/produtos/{id}");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<ProdutoDto>();
+        return await _httpClient.GetAsync($"https://localhost:44337/produtos/{id}");
     }
 
-    public async Task CreateClienteAsync(ProdutoDto cliente)
+    public async Task<HttpResponseMessage> CreateProdutoAsync(ProdutoDto produto)
     {
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:44337/produtos", cliente);
-        response.EnsureSuccessStatusCode();
+        var json = JsonConvert.SerializeObject(produto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        return await _httpClient.PostAsync("https://localhost:44337/produtos", content);
     }
 
-    public async Task UpdateClienteAsync(ProdutoDto cliente)
+    public async Task<HttpResponseMessage> UpdateProdutoAsync(ProdutoDto produto)
     {
-        var response = await _httpClient.PutAsJsonAsync($"https://localhost:44337/produtos", cliente);
-        response.EnsureSuccessStatusCode();
+        var json = JsonConvert.SerializeObject(produto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        return await _httpClient.PutAsync($"https://localhost:44337/produtos/{produto.Id}", content);
     }
 
-    public async Task DeleteClienteAsync(int id)
+    public async Task<HttpResponseMessage> DeleteProdutoAsync(int id)
     {
-        var response = await _httpClient.DeleteAsync($"https://localhost:44337/produtos/{id}");
-        response.EnsureSuccessStatusCode();
+        return await _httpClient.DeleteAsync($"https://localhost:44337/produtos/{id}");
     }
 }

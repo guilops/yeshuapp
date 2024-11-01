@@ -27,7 +27,7 @@ public class IrmaosServices
     {
         var json = JsonConvert.SerializeObject(irmao);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:44337/irmaos", content);
+        var response = await _httpClient.PostAsync("https://localhost:44337/irmaos", content);
         return response;
     }
 
@@ -35,7 +35,7 @@ public class IrmaosServices
     {
         var json = JsonConvert.SerializeObject(irmao);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PutAsJsonAsync($"https://localhost:44337/irmaos{irmao.Id}", content);
+        return await _httpClient.PutAsync($"https://localhost:44337/irmaos/{irmao.Id}", content);
     }
 
     public async Task<HttpResponseMessage> DeleteIrmaoAsync(int id)

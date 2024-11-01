@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yeshuapp.API", "Yeshuapp\Yeshuapp.API.csproj", "{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yeshuapp.API", "Yeshuapp.API\Yeshuapp.API.csproj", "{E7F75E17-361B-418B-83F2-5B2BDB74DB8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yeshuapp.Web", "Yeshuapp.Web\Yeshuapp.Web.csproj", "{CC03015C-F6BD-4973-887B-37B925795214}"
 EndProject
