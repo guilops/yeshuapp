@@ -11,6 +11,8 @@ namespace Yeshuapp.Context
         public DbSet<ClientesEntity> Clientes { get; set; }
         public DbSet<PedidosEntity> Pedidos { get; set; }
         public DbSet<PedidoProdutoEntity> PedidoProdutos { get; set; }
+        public DbSet<EventosEntity> Eventos { get; set; }
+        public DbSet<FrasesEntity> Frases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

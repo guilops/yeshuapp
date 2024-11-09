@@ -17,6 +17,14 @@ builder.Services.AddHttpClient<PedidosServices>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:44337/"); 
 });
+builder.Services.AddHttpClient<EventosServices>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:44337/");
+});
+builder.Services.AddHttpClient<FrasesServices>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:44337/");
+});
 
 var app = builder.Build();
 

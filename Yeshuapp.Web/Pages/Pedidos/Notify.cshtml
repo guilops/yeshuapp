@@ -7,15 +7,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Casa de Oração - Yeshua</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous">
 </head>
 
-<h2 class="mb-2 text-center" style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #4A4A4A;">Excluir</h2>
+<h2 class="mb-2 text-center" style="text-align:center; font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #4A4A4A;">Notificar</h2>
 
-<div class="card">
-    <div class="card-body">
+<div>
+    <div>
         <form asp-page="Notify" method="post">
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
@@ -29,14 +26,25 @@
                 <tbody>
                     @if (Model.Pedido.Cliente.Nome != null && Model.Pedido is not null)
                     {
-                        var diasEmAtraso = (DateTime.Now - Model.Pedido.Data).Days;
+                        var diasEmAtraso = (DateTime.Now.Date - Model.Pedido.Data.Date).Days;
                         diasEmAtraso = diasEmAtraso < 0 ? 0 : diasEmAtraso;
                         <input type="hidden" asp-for="Pedido.Id" />
                         <input type="hidden" name="metodoNotificacao" id="metodoNotificacao" value="" />
                         <tr>
                             <td>@Model.Pedido.Cliente.Nome</td>
                             <td>@Model.Pedido.Valor.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
-                            <td>@diasEmAtraso</td>
+                            @if (diasEmAtraso > 0 && diasEmAtraso <=10)
+                            {
+                                <td style="background-color:#FFD700">@diasEmAtraso</td>
+                            }
+                            else if (diasEmAtraso > 10)
+                            {
+                                <td style="background-color:#FF6347">@diasEmAtraso</td>
+                            }
+                            else
+                            {
+                                <td>@diasEmAtraso</td>
+                            }
                             <td>
                                 <button type="submit" class="btn btn-success btn-sm" title="Enviar notificação via WhatsApp" onclick="Escolha('1');">
                                     <i class="fab fa-whatsapp"></i> WhatsApp
@@ -55,7 +63,6 @@
                     }
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-danger">Notificar</button>
             <a asp-page="/Pedidos/Index" class="btn btn-outline-primary">Voltar</a>
         </form>
     </div>

@@ -1,0 +1,89 @@
+# Compiled binaries
+bin
+obj
+
+# User-specific files
+.rsuser
+.suo
+.user
+.userosscache
+.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on Windows
+$RECYCLE.BIN
+
+# VS Code
+.vscode
+
+# MacOS files
+.DS_Store
+
+# Rider & JetBrains IDEs
+.idea
+.sln.iml
+
+# Logs
+.log
+
+# Visual Studio temporary files
+.vs
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet
+.nupkg
+.snupkg
+packages
+project.lock.json
+project.fragment.lock.json
+artifacts
+
+# NPM Packages
+node_modules
+
+# DotNet Native
+precomp
+
+# Coverage Reports
+coverage
+.coverage
+.coveragexml
+.cov
+.lcov
+
+# Publish artifacts
+publish
+wwwroot
+
+# Resharper files
+_ReSharper
+.DotSettings.user
+
+# Database files
+.mdf
+.ldf
+.ndf
+
+# Azure Functions local settings file
+local.settings.json
+
+# User secrets
+secrets.json
+
+# Others
+.cache
+.config.json
+
+# Avoid versioning app settings that might contain sensitive data
+appsettings.Development.json
