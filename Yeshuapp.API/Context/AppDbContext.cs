@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Entities;
 
 namespace Yeshuapp.Context
@@ -21,5 +23,10 @@ namespace Yeshuapp.Context
 
             base.OnModelCreating(modelBuilder);
         }
+    }
+
+    public class IdentityContext : IdentityDbContext<IdentityUser>
+    {
+        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options){}
     }
 }

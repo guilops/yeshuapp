@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
 using Yeshuapp.Web.Dtos;
@@ -42,4 +43,10 @@ public class IrmaosServices
     {
         return await _httpClient.DeleteAsync($"https://localhost:44337/irmaos/{id}");
     }
+
+    public void SetAuthorizationHeader(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+
 }

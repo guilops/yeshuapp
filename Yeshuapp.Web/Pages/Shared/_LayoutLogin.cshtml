@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Yeshuapp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F4F4F9; /* Tom suave e acolhedor */
+            font-family: 'Cinzel', serif; /* Fonte amigável para um visual mais elegante */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff; /* Cor clara para header */
+        }
+
+        .navbar {
+            background-color: #fff; /* Navbar com fundo branco */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .navbar-brand img {
+            max-width: 50px;
+            height: auto;
+        }
+
+        footer.footer {
+            background-color: #fff; /* Cor clara no footer */
+            padding: 1rem 0;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #888;
+        }
+
+        .login-container {
+            margin-top: 50px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/logo3.png" alt="Logo" />
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            &copy; @DateTime.Now.Year - Deus te abençoe
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

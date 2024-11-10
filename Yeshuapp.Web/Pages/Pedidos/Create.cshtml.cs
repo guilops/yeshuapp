@@ -12,20 +12,23 @@ namespace Yeshuapp.Web.Pages.Pedidos
         [BindProperty]
         public List<ProdutoDto>? Produtos { get; set; } = new List<ProdutoDto>();
         public List<SelectListItem> Irmaos { get; set; }
-        private readonly PedidosServices _pedidoServices;
+        private readonly PedidosServices _pedidosServices;
         private readonly ProdutosServices _produtosServices;
         private readonly IrmaosServices _irmaosServices;
         public string ErrorMessage;
 
         public CreateModel(PedidosServices pedidoServices, ProdutosServices produtosServices, IrmaosServices irmaosServices)
         {
-            _pedidoServices = pedidoServices;
+            _pedidosServices = pedidoServices;
             _produtosServices = produtosServices;
             _irmaosServices = irmaosServices;
         }
 
         public async Task<IActionResult> OnGet()
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var resultProdutos = await _produtosServices.GetProdutosAsync();
             var resultIrmaos = await _irmaosServices.GetIrmaosAsync();
 
@@ -52,6 +55,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             Pedido.Data = DateTime.Now;
             Pedido.StatusPedido = Enums.EStatusPedido.Aberto;
             Pedido.Cliente = await (await _irmaosServices.GetIrmaoByIdAsync(Pedido.CodigoCliente)).Content.ReadFromJsonAsync<ClienteRequestDto>();
@@ -71,7 +75,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
             Pedido.Valor = Pedido.Produtos.Sum(p => p.Produto.Valor * p.Quantidade);
 
-            var response = await _pedidoServices.CreatePedidoAsync(Pedido);
+            var response = await _pedidosServices.CreatePedidoAsync(Pedido);
 
             if (response.IsSuccessStatusCode)
             {

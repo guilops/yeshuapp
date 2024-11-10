@@ -1,0 +1,45 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using Yeshuapp.Web.Dtos;
+
+public class LoginModel : PageModel
+{
+    private readonly AutenticacaoServices _autenticacaoServices; 
+
+    public LoginModel(AutenticacaoServices autenticacaoServices)
+    {
+        _autenticacaoServices = autenticacaoServices;
+    }
+
+    [BindProperty]
+    public LoginDto Login { get; set; }
+
+    public void OnGet()
+    {
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+            return Page();
+
+        var response = await _autenticacaoServices.LoginAsync(Login);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var token = await response.Content.ReadAsStringAsync();
+
+            var dtoToken = JsonConvert.DeserializeObject<TokenDto>(token);
+
+            Response.Cookies.Append("jwtToken", dtoToken.token, new CookieOptions { HttpOnly = true, Secure = true });  
+
+            return RedirectToPage("/Home");
+        }
+        else
+        {
+            ModelState.AddModelError(string.Empty, "Login inválido.");
+            return Page();
+        }
+    }
+}

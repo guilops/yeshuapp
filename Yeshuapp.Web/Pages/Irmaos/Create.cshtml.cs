@@ -21,6 +21,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             // Verifique se a imagem foi enviada
             if (imagemFile != null && imagemFile.Length > 0)
             {

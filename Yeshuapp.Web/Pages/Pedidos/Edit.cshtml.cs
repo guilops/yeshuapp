@@ -26,6 +26,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var resultPedido = await _pedidosServices.GetPedidoByIdAsync(id);
             var resultProdutos = await _produtosServices.GetProdutosAsync();
 
@@ -69,6 +70,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             Pedido.Data = DateTime.Now;
             Pedido.StatusPedido = Enums.EStatusPedido.Aberto;
             Pedido.Cliente = await (await _irmaosServices.GetIrmaoByIdAsync(Pedido.CodigoCliente)).Content.ReadFromJsonAsync<ClienteRequestDto>();

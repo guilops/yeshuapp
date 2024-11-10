@@ -25,6 +25,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _irmaosServices.GetIrmaoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -39,6 +40,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _irmaosServices.DeleteIrmaoAsync(Irmao.Id);
 
             if (response.IsSuccessStatusCode)

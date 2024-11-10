@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using Yeshuapp.Web.Dtos;
 
@@ -38,5 +39,10 @@ public class ProdutosServices
     public async Task<HttpResponseMessage> DeleteProdutoAsync(int id)
     {
         return await _httpClient.DeleteAsync($"https://localhost:44337/produtos/{id}");
+    }
+
+    public void SetAuthorizationHeader(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 }

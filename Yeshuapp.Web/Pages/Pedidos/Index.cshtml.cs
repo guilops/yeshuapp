@@ -17,6 +17,12 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var token = Request.Cookies["jwtToken"];
+
+            if (string.IsNullOrEmpty(token))
+                return RedirectToPage("/Login");
+
+            _pedidosServices.SetAuthorizationHeader(token);
             var result = await _pedidosServices.GetPedidosAsync();
 
             if (!result.IsSuccessStatusCode)

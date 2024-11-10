@@ -8,18 +8,24 @@ namespace Yeshuapp.Web.Pages.Irmaos
 {
     public class IndexModel : PageModel
     {
-        private readonly IrmaosServices _apiService;
+        private readonly IrmaosServices _irmaosServices;
 
-        public IndexModel(IrmaosServices apiService)
+        public IndexModel(IrmaosServices irmaosServices)
         {
-            _apiService = apiService;
+            _irmaosServices = irmaosServices;
         }
         [BindProperty]
         public List<ClienteResponseDto> Clientes { get; set; } = new List<ClienteResponseDto>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var result = await _apiService.GetIrmaosAsync();
+            var token = Request.Cookies["jwtToken"];
+
+            if (string.IsNullOrEmpty(token))
+                return RedirectToPage("/Login");
+
+            _irmaosServices.SetAuthorizationHeader(token);
+            var result = await _irmaosServices.GetIrmaosAsync();
 
             if (!result.IsSuccessStatusCode)
                 return Page();

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using Yeshuapp.Web.Dtos;
 using Yeshuapp.Web.Enums;
@@ -44,5 +45,10 @@ public class PedidosServices
     public async Task<HttpResponseMessage> NotificarPedidoAsync(int id, ECanalNotificacao eCanal)
     {
         throw new NotImplementedException();
+    }
+
+    public void SetAuthorizationHeader(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 }

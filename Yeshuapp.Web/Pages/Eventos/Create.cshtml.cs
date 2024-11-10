@@ -19,6 +19,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _eventosServices.CreateEventoAsync(Evento);
 
             if (response.IsSuccessStatusCode)

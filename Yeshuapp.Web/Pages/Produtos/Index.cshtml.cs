@@ -17,6 +17,13 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var token = Request.Cookies["jwtToken"];
+
+            if (string.IsNullOrEmpty(token))
+                return RedirectToPage("/Login");
+
+            _produtosServices.SetAuthorizationHeader(token);
+
             var result = await _produtosServices.GetProdutosAsync();
 
             if (!result.IsSuccessStatusCode)

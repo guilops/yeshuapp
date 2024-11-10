@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 using Yeshuapp.Dtos;
-using Yeshuapp.Web.Dtos;
 
 namespace Yeshuapp.Web.Pages.Eventos
 {
@@ -10,13 +9,13 @@ namespace Yeshuapp.Web.Pages.Eventos
     {
         [BindProperty]
         public EventoDto Evento { get; set; }
-        private readonly EventosServices _eventoServices;
+        private readonly EventosServices _eventosServices;
 
         private readonly JsonSerializerOptions options;
 
         public DeleteModel(EventosServices eventoServices)
         {
-            _eventoServices = eventoServices;
+            _eventosServices = eventoServices;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -26,7 +25,8 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var response = await _eventoServices.GetEventoByIdAsync(id);
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            var response = await _eventosServices.GetEventoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -40,7 +40,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var response = await _eventoServices.DeleteEventoAsync(Evento.Id);
+            var response = await _eventosServices.DeleteEventoAsync(Evento.Id);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToPage("/Eventos/Index");

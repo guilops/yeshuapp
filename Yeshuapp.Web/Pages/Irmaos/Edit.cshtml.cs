@@ -25,6 +25,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _irmaosServices.GetIrmaoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -41,6 +42,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             if (imagemFile != null && imagemFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())

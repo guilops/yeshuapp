@@ -10,16 +10,21 @@ namespace Yeshuapp.Web.Pages.Eventos
         [BindProperty]
         public List<EventoDto>? Eventos { get; set; }
 
-        private readonly EventosServices _eventoServices;
+        private readonly EventosServices _eventosServices;
 
         public IndexModel(EventosServices eventoServices)
         {
-            _eventoServices = eventoServices;
+            _eventosServices = eventoServices;
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            // Lista de eventos
-            var result = await _eventoServices.GetEventosAsync();
+            var token = Request.Cookies["jwtToken"];
+
+            if (string.IsNullOrEmpty(token))
+                return RedirectToPage("/Login");
+
+            _eventosServices.SetAuthorizationHeader(token);
+            var result = await _eventosServices.GetEventosAsync();
 
             if (!result.IsSuccessStatusCode)
                 return Page();

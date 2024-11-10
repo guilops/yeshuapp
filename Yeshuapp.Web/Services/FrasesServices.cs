@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using Yeshuapp.Dtos;
+
 
 public class FrasesServices
 {
@@ -11,9 +13,14 @@ public class FrasesServices
         _httpClient = httpClient;
     }
 
+    public void SetAuthorizationHeader(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+
     public async Task<HttpResponseMessage> GetFrasesAsync()
     {
-       return await _httpClient.GetAsync("https://localhost:44337/frases");
+        return await _httpClient.GetAsync("https://localhost:44337/frases");
     }
 
     public async Task<HttpResponseMessage> GetFraseByIdAsync(int id)

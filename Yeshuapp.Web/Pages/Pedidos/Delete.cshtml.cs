@@ -25,6 +25,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _pedidosServices.GetPedidoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -39,6 +40,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _pedidosServices.DeletePedidoAsync(Pedido.Id);
 
             if (response.IsSuccessStatusCode)

@@ -25,6 +25,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _produtosServices.GetProdutoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -39,6 +40,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _produtosServices.DeleteProdutoAsync(Produto.Id);
 
             if (response.IsSuccessStatusCode)

@@ -10,13 +10,13 @@ namespace Yeshuapp.Web.Pages.Eventos
     {
         [BindProperty]
         public EventoDto? Evento { get; set; }
-        private readonly EventosServices _eventoServices;
+        private readonly EventosServices _eventosServices;
 
         private readonly JsonSerializerOptions options;
 
         public EditModel(EventosServices eventoServices)
         {
-            _eventoServices = eventoServices;
+            _eventosServices = eventoServices;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -26,7 +26,8 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var response = await _eventoServices.GetEventoByIdAsync(id);
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            var response = await _eventosServices.GetEventoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -40,7 +41,8 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var response = await _eventoServices.UpdateEventoAsync(Evento);
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            var response = await _eventosServices.UpdateEventoAsync(Evento);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToPage("/Eventos/Index");

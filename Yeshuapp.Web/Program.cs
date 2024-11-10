@@ -25,6 +25,10 @@ builder.Services.AddHttpClient<FrasesServices>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:44337/");
 });
+builder.Services.AddHttpClient<AutenticacaoServices>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:44337/");
+});
 
 var app = builder.Build();
 
@@ -40,6 +44,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    // Redireciona a raiz para a página de Login
+    endpoints.MapGet("/", async context =>
+    {
+        context.Response.Redirect("/Login");
+        await Task.CompletedTask; // Garantir que o método seja assíncrono
+    });
+    endpoints.MapRazorPages();
+});
 
 app.UseAuthorization();
 
