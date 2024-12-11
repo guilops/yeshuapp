@@ -64,7 +64,6 @@ coverage
 
 # Publish artifacts
 publish
-wwwroot
 
 # Resharper files
 _ReSharper
