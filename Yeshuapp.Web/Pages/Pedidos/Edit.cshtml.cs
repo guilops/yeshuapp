@@ -27,6 +27,9 @@ namespace Yeshuapp.Web.Pages.Pedidos
         public async Task<IActionResult> OnGetAsync(int id)
         {
             _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+
             var resultPedido = await _pedidosServices.GetPedidoByIdAsync(id);
             var resultProdutos = await _produtosServices.GetProdutosAsync();
 

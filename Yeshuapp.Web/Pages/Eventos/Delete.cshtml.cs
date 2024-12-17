@@ -35,11 +35,12 @@ namespace Yeshuapp.Web.Pages.Eventos
                 return Page();
             }
 
-            return RedirectToPage("/Produtos/Index");
+            return RedirectToPage("/Eventos/Index");
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _eventosServices.DeleteEventoAsync(Evento.Id);
 
             if (response.IsSuccessStatusCode)

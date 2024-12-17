@@ -40,7 +40,7 @@ public class EventosServices
         return await _httpClient.DeleteAsync($"https://localhost:44337/eventos/{id}");
     }
 
-    internal void SetAuthorizationHeader(string token)
+    public void SetAuthorizationHeader(string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
     }

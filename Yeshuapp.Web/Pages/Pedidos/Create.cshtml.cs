@@ -56,6 +56,8 @@ namespace Yeshuapp.Web.Pages.Pedidos
         public async Task<IActionResult> OnPostAsync()
         {
             _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             Pedido.Data = DateTime.Now;
             Pedido.StatusPedido = Enums.EStatusPedido.Aberto;
             Pedido.Cliente = await (await _irmaosServices.GetIrmaoByIdAsync(Pedido.CodigoCliente)).Content.ReadFromJsonAsync<ClienteRequestDto>();

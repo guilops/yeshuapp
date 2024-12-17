@@ -51,7 +51,7 @@ namespace Yeshuapp.Controllers
                         TelefoneCelular = p.Cliente.TelefoneCelular,
                         Email = p.Cliente.Email,
                     }
-                }).ToListAsync();
+                }).Where(s=> s.StatusPedido == API.Enums.EStatusPedido.Aberto).ToListAsync();
 
             if (!pedidos.Any()) return NotFound();
 
@@ -181,6 +181,19 @@ namespace Yeshuapp.Controllers
             if (pedidoConsulta == null)
                 return StatusCode(500,"Não foi possivel cadastrar o pedido");
 
+            // Registrar movimentação no Fluxo de Caixa
+            var fluxoCaixaEntity = new FluxoCaixaEntity
+            {
+                Data = DateTime.Now,
+                Tipo = "Entrada",
+                Valor = pedidoEntity.Valor,
+                Origem = "Venda de Produtos",
+                Descricao = $"Pedido #{pedidoEntity.Id} - Cliente: #{pedidoEntity.Cliente.Nome}"
+            };
+
+            await _context.FluxoCaixa.AddAsync(fluxoCaixaEntity);
+            await _context.SaveChangesAsync();
+
             return Created($"/pedidos/{pedidoConsulta.Id}", pedidoConsulta);
 
         }
@@ -267,14 +280,27 @@ namespace Yeshuapp.Controllers
             if (pedidoConsulta == null)
                 return StatusCode(500, "Não foi possivel atualizar o pedido");
 
+            // Registrar movimentação no Fluxo de Caixa
+            var fluxoCaixaEntity = new FluxoCaixaEntity
+            {
+                Data = DateTime.Now,
+                Tipo = "Entrada",
+                Valor = pedidoEntity.Valor,
+                Origem = "Venda de Produtos",
+                Descricao = $"Pedido #{pedidoEntity.Id} - Cliente: #{pedidoEntity.Cliente.Nome}"
+            };
+
+            await _context.FluxoCaixa.AddAsync(fluxoCaixaEntity);
+            await _context.SaveChangesAsync();
+
             return Ok(pedidoConsulta);
 
         }
 
         [HttpDelete("/pedidos/{id:int}")]
-        public async Task<IActionResult> DeletarPedido(int codPedido)
+        public async Task<IActionResult> DeletarPedido(int id)
         {
-            var pedidoEntity = _context.Pedidos.FirstOrDefault(x => x.Id == codPedido);
+            var pedidoEntity = _context.Pedidos.FirstOrDefault(x => x.Id == id);
             if (pedidoEntity == null) return NotFound("Pedido informado não localizado");
 
             pedidoEntity.StatusPedido = API.Enums.EStatusPedido.Fechado;

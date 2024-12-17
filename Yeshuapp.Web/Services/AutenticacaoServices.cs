@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
-using Yeshuapp.Dtos;
 using Yeshuapp.Web.Dtos;
 
 public class AutenticacaoServices
@@ -12,7 +11,6 @@ public class AutenticacaoServices
         _httpClient = httpClient;
     }
 
-   
     public async Task<HttpResponseMessage> LoginAsync(LoginDto login)
     {
         var json = JsonConvert.SerializeObject(login);
