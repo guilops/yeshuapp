@@ -7,7 +7,9 @@ using Yeshuapp.Entities;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    
     public class EventosController : ControllerBase
     {
         private readonly ILogger<EventosController> _logger;
@@ -20,21 +22,23 @@ namespace Yeshuapp.Controllers
         }
 
         [HttpGet("/eventos")]
+        // [MapToApiVersion("2.0")]
         public IActionResult ListarProdutos()
         {
             var result = _context.Eventos.ToList();
 
-            if (result.Count == 0) return NotFound("Eventos não localizados");
+            if (result.Count == 0) return NotFound("Eventos nï¿½o localizados");
 
             return Ok(result);
         }
 
         [HttpGet("/eventos/{id:int}")]
+        [MapToApiVersion("1.0")]
         public IActionResult ListarProdutosPorId(int id)
         {
             var produtosEntity = _context.Eventos.FirstOrDefault(x=> x.Id == id);
 
-            if (produtosEntity is null) return NotFound("Eventos não localizado");
+            if (produtosEntity is null) return NotFound("Eventos nï¿½o localizado");
 
             return Ok(produtosEntity);
         }
@@ -61,7 +65,7 @@ namespace Yeshuapp.Controllers
         {
             var pedidoEntity = _context.Eventos.FirstOrDefaultAsync(x=> x.Id==id).Result;    
 
-            if (pedidoEntity is null) return NotFound("Evento não localizado");
+            if (pedidoEntity is null) return NotFound("Evento nï¿½o localizado");
 
             pedidoEntity.Data = evento.Data;
             pedidoEntity.Descricao = evento.Descricao;
@@ -81,12 +85,12 @@ namespace Yeshuapp.Controllers
         {
             var eventosEntity = _context.Eventos.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (eventosEntity is null) return NotFound("Evento não localizado");
+            if (eventosEntity is null) return NotFound("Evento nï¿½o localizado");
 
             _context.Eventos.Remove(eventosEntity);
             await _context.SaveChangesAsync();
 
-            return Ok("Evento excluído com sucesso");
+            return Ok("Evento excluï¿½do com sucesso");
         }
     }
 }

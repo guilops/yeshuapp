@@ -5,12 +5,35 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+var config = new ConfigurationBuilder()
+          .SetBasePath(AppContext.BaseDirectory) // Define o caminho base como o diretï¿½rio atual
+          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Adiciona o arquivo JSON
+          .Build();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -50,9 +73,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Yeshuapp API", Version = "v1" });
+    c.SwaggerDoc("'v'VVV", new OpenApiInfo { Title = "Yeshuapp API", Version = "'v'VVV" });
 
-    // Adicione a definição do esquema de segurança JWT
+    // Adicione a definiï¿½ï¿½o do esquema de seguranï¿½a JWT
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -63,7 +86,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Insira o token JWT no formato 'Bearer {token}'"
     });
 
-    // Adicione um requisito de segurança para os endpoints
+    // Adicione um requisito de seguranï¿½a para os endpoints
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -81,10 +104,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Yeshuapp v1");
+        foreach (var desc in apiVersionProvider.ApiVersionDescriptions)
+        {
+            c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
+        }
     });
 }
 
@@ -96,3 +124,32 @@ app.UseAuthorization();
 app.MapControllers().RequireAuthorization();
 
 app.Run();
+
+
+public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+{
+    private readonly IApiVersionDescriptionProvider _provider;
+
+    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+    {
+        _provider = provider;
+    }
+
+    public void Configure(SwaggerGenOptions options)
+    {
+        foreach (var desc in _provider.ApiVersionDescriptions)
+        {
+            options.SwaggerDoc(desc.GroupName, new OpenApiInfo
+            {
+                Title = $"yeshuappAPI - VersÃ£o {desc.ApiVersion}",
+                Version = desc.ApiVersion.ToString(),
+                Description = "DocumentaÃ§Ã£o gerada automaticamente",
+                Contact = new OpenApiContact
+                {
+                    Name = "Guilherme Tech Solutions",
+                    Email = "guilherme.glsantos@gmail.com"
+                },
+            });
+        }
+    }
+}
