@@ -1,14 +1,14 @@
-using Yeshuapp.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text;
+using Yeshuapp.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +26,8 @@ builder.Services.AddVersionedApiExplorer(options =>
 });
 
 var config = new ConfigurationBuilder()
-          .SetBasePath(AppContext.BaseDirectory) // Define o caminho base como o diret�rio atual
-          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Adiciona o arquivo JSON
+          .SetBasePath(AppContext.BaseDirectory) 
+          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) 
           .Build();
 
 builder.Services.AddControllers();
