@@ -1,16 +1,26 @@
-﻿
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+﻿# Etapa de build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["Yeshuapp.API/Yeshuapp.API.csproj", "Yeshuapp.API/"]
-RUN dotnet restore "Yeshuapp.API/Yeshuapp.API.csproj"
+
+# Copia tudo (inclui o .csproj)
 COPY . .
-WORKDIR "/src/Yeshuapp.API"
-RUN dotnet publish -c Release -o /app/publish
 
+# Restaura as dependências
+RUN dotnet restore "Yeshuapp.API.csproj"
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Publica o projeto para a pasta /app/publish
+RUN dotnet publish "Yeshuapp.API.csproj" -c Release -o /app/publish
+
+# Etapa final de runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
+
+# Copia o resultado da publicação do build
 COPY --from=build /app/publish .
+
+# Define a porta exposta e URL de escuta
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
+
+# Define o comando de entrada
 ENTRYPOINT ["dotnet", "Yeshuapp.API.dll"]
