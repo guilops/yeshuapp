@@ -1,34 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json.Serialization;
 using Yeshuapp.Web.Dtos;
 
 public class IrmaosServices
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private string urlBase = string.Empty;  
 
-    public IrmaosServices(HttpClient httpClient)
+    public IrmaosServices(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+        urlBase = _configuration["baseApiUrl"];
     }
 
     public async Task<HttpResponseMessage> GetIrmaosAsync()
     {
-        return await _httpClient.GetAsync("https://localhost:44337/irmaos");
+        return await _httpClient.GetAsync($"{urlBase}/irmaos");
     }
 
     public async Task<HttpResponseMessage> GetIrmaoByIdAsync(int id)
     {
-        return await _httpClient.GetAsync($"https://localhost:44337/irmaos/{id}");
+        return await _httpClient.GetAsync($"{urlBase}/irmaos/{id}");
     }
 
     public async Task<HttpResponseMessage> CreateIrmaoAsync(ClienteResponseDto irmao)
     {
         var json = JsonConvert.SerializeObject(irmao);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("https://localhost:44337/irmaos", content);
+        var response = await _httpClient.PostAsync($"{urlBase}/irmaos", content);
         return response;
     }
 
@@ -36,12 +38,12 @@ public class IrmaosServices
     {
         var json = JsonConvert.SerializeObject(irmao);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PutAsync($"https://localhost:44337/irmaos/{irmao.Id}", content);
+        return await _httpClient.PutAsync($"{urlBase}/irmaos/{irmao.Id}", content);
     }
 
     public async Task<HttpResponseMessage> DeleteIrmaoAsync(int id)
     {
-        return await _httpClient.DeleteAsync($"https://localhost:44337/irmaos/{id}");
+        return await _httpClient.DeleteAsync($"{urlBase}/irmaos/{id}");
     }
 
     public void SetAuthorizationHeader(string token)

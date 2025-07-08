@@ -6,39 +6,43 @@ using Yeshuapp.Web.Dtos;
 public class ProdutosServices
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private string urlBase = string.Empty;
 
-    public ProdutosServices(HttpClient httpClient)
+    public ProdutosServices(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+        urlBase = _configuration["baseApiUrl"];
     }
 
     public async Task<HttpResponseMessage> GetProdutosAsync()
     {
-       return await _httpClient.GetAsync("https://localhost:44337/produtos");
+       return await _httpClient.GetAsync($"{urlBase}/produtos");
     }
 
     public async Task<HttpResponseMessage> GetProdutoByIdAsync(int id)
     {
-        return await _httpClient.GetAsync($"https://localhost:44337/produtos/{id}");
+        return await _httpClient.GetAsync($"{urlBase}/produtos/{id}");
     }
 
     public async Task<HttpResponseMessage> CreateProdutoAsync(ProdutoDto produto)
     {
         var json = JsonConvert.SerializeObject(produto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PostAsync("https://localhost:44337/produtos", content);
+        return await _httpClient.PostAsync($"{urlBase}/produtos", content);
     }
 
     public async Task<HttpResponseMessage> UpdateProdutoAsync(ProdutoDto produto)
     {
         var json = JsonConvert.SerializeObject(produto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PutAsync($"https://localhost:44337/produtos/{produto.Id}", content);
+        return await _httpClient.PutAsync($"{urlBase}/produtos/{produto.Id}", content);
     }
 
     public async Task<HttpResponseMessage> DeleteProdutoAsync(int id)
     {
-        return await _httpClient.DeleteAsync($"https://localhost:44337/produtos/{id}");
+        return await _httpClient.DeleteAsync($"{urlBase}/produtos/{id}");
     }
 
     public void SetAuthorizationHeader(string token)

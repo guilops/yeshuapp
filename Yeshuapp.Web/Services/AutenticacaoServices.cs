@@ -5,24 +5,28 @@ using Yeshuapp.Web.Dtos;
 public class AutenticacaoServices
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private string urlBase = string.Empty;
 
-    public AutenticacaoServices(HttpClient httpClient)
+    public AutenticacaoServices(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+        urlBase = _configuration["baseApiUrl"];
     }
 
     public async Task<HttpResponseMessage> LoginAsync(LoginDto login)
     {
         var json = JsonConvert.SerializeObject(login);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PostAsync("https://localhost:44337/auth/login", content);
+        return await _httpClient.PostAsync($"{urlBase}/auth/login", content);
     }
 
     public async Task<HttpResponseMessage> CreateAsync(LoginDto login)
     {
         var json = JsonConvert.SerializeObject(login);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PostAsync("https://localhost:44337/auth/create", content);
+        return await _httpClient.PostAsync($"{urlBase}/auth/create", content);
     }
 
 }

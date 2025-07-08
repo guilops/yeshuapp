@@ -7,10 +7,14 @@ using Yeshuapp.Dtos;
 public class FrasesServices
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private string urlBase = string.Empty;
 
-    public FrasesServices(HttpClient httpClient)
+    public FrasesServices(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+        urlBase = _configuration["baseApiUrl"];
     }
 
     public void SetAuthorizationHeader(string token)
@@ -20,30 +24,30 @@ public class FrasesServices
 
     public async Task<HttpResponseMessage> GetFrasesAsync()
     {
-        return await _httpClient.GetAsync("https://localhost:44337/frases");
+        return await _httpClient.GetAsync($"{urlBase}/frases");
     }
 
     public async Task<HttpResponseMessage> GetFraseByIdAsync(int id)
     {
-        return await _httpClient.GetAsync($"https://localhost:44337/frases/{id}");
+        return await _httpClient.GetAsync($"{urlBase}/frases/{id}");
     }
 
     public async Task<HttpResponseMessage> CreateFrasesAsync(FraseDto frase)
     {
         var json = JsonConvert.SerializeObject(frase);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PostAsync("https://localhost:44337/frases", content);
+        return await _httpClient.PostAsync($"{urlBase}/frases", content);
     }
 
     public async Task<HttpResponseMessage> UpdateFrasesAsync(FraseDto frase)
     {
         var json = JsonConvert.SerializeObject(frase);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return await _httpClient.PutAsync($"https://localhost:44337/frases/{frase.Id}", content);
+        return await _httpClient.PutAsync($"{urlBase}/frases/{frase.Id}", content);
     }
 
     public async Task<HttpResponseMessage> DeleteFrasesAsync(int id)
     {
-        return await _httpClient.DeleteAsync($"https://localhost:44337/frases/{id}");
+        return await _httpClient.DeleteAsync($"{urlBase}/frases/{id}");
     }
 }
