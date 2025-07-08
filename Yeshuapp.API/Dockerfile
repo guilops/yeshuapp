@@ -5,6 +5,7 @@ WORKDIR /src
 # Copia tudo (inclui o .csproj)
 COPY . .
 
+
 # Restaura as dependências
 RUN dotnet restore "Yeshuapp.API.csproj"
 
