@@ -101,20 +101,16 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    foreach (var desc in apiVersionProvider.ApiVersionDescriptions)
     {
-        foreach (var desc in apiVersionProvider.ApiVersionDescriptions)
-        {
-            c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
-        }
-    });
-}
+        c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
+    }
+});
 
 app.UseHttpsRedirection();
 
