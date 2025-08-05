@@ -61,7 +61,7 @@ namespace Yeshuapp.Controllers
                                               f.Livro == fraseEntity.Livro);
 
 
-                if (existingFrase is not null)
+                if (existingFrase is null)
                 {
                     _context.Frases.Add(fraseEntity);
                     await _context.SaveChangesAsync();
