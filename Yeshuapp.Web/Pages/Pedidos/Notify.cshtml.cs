@@ -133,10 +133,10 @@ namespace Yeshuapp.Web.Pages.Pedidos
         {
             var mensagem = new StringBuilder();
 
-            mensagem.AppendLine($"Ol� {pedido.Cliente.Nome}, tudo bem?");
-            mensagem.AppendLine($"Apenas gostar�amos de te lembrar que existe um pedido em aberto na casa de Ora��o Yeshua.");
-            mensagem.AppendLine($"Data do Pedido: {pedido.Data.ToShortDateString()}, Valor: {pedido.Valor}");
-            mensagem.AppendLine($"Se j� tiver efetuado o pagamento, desconsidere essa mensagem");
+            mensagem.AppendLine($"Ola, tudo bem?");
+            mensagem.AppendLine($"Gostariamos de te lembrar que existe um pedido em aberto na casa de Oracao Yeshua.");
+            mensagem.AppendLine($"Data do Pedido: {pedido.Data.ToShortDateString()}, Valor: R$ {pedido.Valor}");
+            mensagem.AppendLine($"Se já efetuou o pagamento, desconsidere essa mensagem.");
 
             return mensagem.ToString();
 
