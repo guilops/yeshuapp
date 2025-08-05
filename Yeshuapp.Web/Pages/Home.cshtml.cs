@@ -7,28 +7,38 @@ namespace Yeshuapp.Web.Pages
     public class HomeModel : PageModel
     {
         private readonly FrasesServices _frasesServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly EventosServices _eventosServices;
 
         [BindProperty]
         public List<FraseDto> Frases { get; set; } = new List<FraseDto>();
+        [BindProperty]
+        public List<EventoDto> Eventos { get; set; } = new List<EventoDto>();
 
-        public HomeModel(FrasesServices frasesServices,IHttpContextAccessor httpContextAccessor)
+        public HomeModel(FrasesServices frasesServices,EventosServices eventosServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _frasesServices = frasesServices;
+            _eventosServices = eventosServices;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            _frasesServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _frasesServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+
             var result = await _frasesServices.GetFrasesAsync();
+
+            var eventosResult = await _eventosServices.GetEventosAsync();
 
             if (result.IsSuccessStatusCode)
             {
-                var frases = await result.Content.ReadFromJsonAsync<List<FraseDto>>();
+                Frases = await result.Content.ReadFromJsonAsync<List<FraseDto>>();
 
                 Random random = new Random();
-                Frases = frases.OrderBy(x => random.Next()).Take(5).Where(x => x.Ativa).ToList();
+                var eventos = await eventosResult.Content.ReadFromJsonAsync<List<EventoDto>>();
+
+                if (eventos != null && eventos.Any())
+                    Eventos = eventos.OrderBy(e => random.Next()).Take(3).ToList();
+                
 
                 return Page();
             }

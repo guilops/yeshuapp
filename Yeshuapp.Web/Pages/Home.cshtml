@@ -2,13 +2,13 @@
 @model HomeModel
 @{
     ViewData["Title"] = "Home page";
+    var frase = Model.Frases?.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
 }
 
 <div class="text-center">
     <img src="~/logo3.png" style="max-width: 100px;" alt="Logo" />
     <br />
-
-    @foreach (var frase in Model.Frases)
+    @if (frase != null)
     {
         <blockquote class="blockquote" style="margin-bottom: 1.2rem;">
             <p class="mb-0">"@frase.Passagem"</p>
@@ -17,4 +17,37 @@
             </p>
         </blockquote>
     }
+</div>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Próximos Eventos</h2>
+    <div class="row justify-content-center">
+        @if (Model.Eventos != null && Model.Eventos.Any())
+        {
+            foreach (var evento in Model.Eventos)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@evento.Nome</h5>
+                            <p class="card-text">
+                                <strong>Data:</strong> @evento.DataEvento.ToString("dd/MM/yyyy")<br />
+                                <strong>Local:</strong> @evento.Local
+                            </p>
+                            @if (!string.IsNullOrEmpty(evento.Descricao))
+                            {
+                                <p class="card-text">@evento.Descricao</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>Nenhum evento encontrado.</p>
+            </div>
+        }
+    </div>
 </div>
