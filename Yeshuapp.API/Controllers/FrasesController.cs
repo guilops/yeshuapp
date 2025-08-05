@@ -54,8 +54,18 @@ namespace Yeshuapp.Controllers
                     Passagem = frase.Passagem,
                     Ativa = true
                 };
-                _context.Frases.Add(fraseEntity);
-                await _context.SaveChangesAsync();
+
+                var existingFrase = await _context.Frases
+                    .FirstOrDefaultAsync(f => f.Versiculo == fraseEntity.Versiculo &&
+                                              f.Capitulo == fraseEntity.Capitulo &&
+                                              f.Livro == fraseEntity.Livro);
+
+
+                if (existingFrase is not null)
+                {
+                    _context.Frases.Add(fraseEntity);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             return Ok("Frases salvas com sucesso");
