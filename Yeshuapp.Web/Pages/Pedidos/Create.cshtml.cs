@@ -70,6 +70,12 @@ namespace Yeshuapp.Web.Pages.Pedidos
             {
                 var produto = Pedido.Produtos?.FirstOrDefault(x => x.Id == produtoPedido.Id);
 
+                if (produto.Quantidade <= 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Produto sem estoque disponivel.");
+                    return Page();
+                }
+
                 produto.Produto = produtos.FirstOrDefault(x => x.Id == produtoPedido.Id);
                 produto.Produto.Quantidade = produto.Produto.Quantidade - produtoPedido.Quantidade;
 

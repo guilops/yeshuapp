@@ -105,96 +105,107 @@ namespace Yeshuapp.Controllers
         public async Task<IActionResult> SalvarPedido(PedidoDto pedido)
         {
             var clienteEntity = _context.Clientes.FirstOrDefault(x => x.Id == pedido.CodigoCliente);
-            if (clienteEntity == null) return NotFound("Cliente informado não localizado");
+            if (clienteEntity == null) 
+                return NotFound("Cliente informado não localizado");
 
             decimal valorProdutosSomados = 0;
 
-            foreach (var produtoPedido in pedido.Produtos)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                var produtoExistente = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == produtoPedido.Id);
-
-                if (produtoExistente == null)
-                    return NotFound($"Produto com ID {produtoPedido.Id} não encontrado.");
-
-                if (produtoExistente.Quantidade < produtoPedido.Quantidade)
-                    return BadRequest("Estoque insuficiente para o produto.");
-
-                produtoExistente.Quantidade -= produtoPedido.Produto.Quantidade;
-
-                valorProdutosSomados += pedido.Produtos.Where(x=> x.Id == produtoExistente.Id).Sum(x => x.Quantidade * produtoExistente.Valor);
-
-            }
-
-            if (Math.Round(valorProdutosSomados, 2) != Math.Round(pedido.Valor, 2))
-                return BadRequest("Valor do Pedido diferente da soma dos produtos");
-
-            var pedidoEntity = new PedidosEntity
-            {
-                Cliente = clienteEntity,
-                StatusPedido = API.Enums.EStatusPedido.Aberto,
-                Valor = pedido.Valor,
-                PedidoProdutos = pedido.Produtos
-                    .Select(dto => new PedidoProdutoEntity
-                    {
-                        ProdutoId = dto.Id,
-                        Quantidade = dto.Quantidade
-                    })
-                    .ToList()
-            };
-
-            _context.Pedidos.Add(pedidoEntity);
-            await _context.SaveChangesAsync();
-
-            var pedidoConsulta = await _context.Pedidos
-                .Include(p => p.PedidoProdutos)
-                .ThenInclude(pp => pp.Produto)
-                .Include(p => p.Cliente)
-                .Where(p => p.Id == pedidoEntity.Id)
-                .Select(p => new PedidoResponseDto
+                foreach (var produtoPedido in pedido.Produtos)
                 {
-                    Id = p.Id,
-                    CodigoCliente = p.Cliente.Id,
-                    Data = p.Data,
-                    StatusPedido = p.StatusPedido,
-                    Valor = p.Valor,
-                    Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
-                    {
-                        Id = pp.ProdutoId,
-                        Quantidade = pp.Quantidade,
-                        Produto = new ProdutoDto
+                    var produtoExistente = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == produtoPedido.Id);
+
+                    if (produtoExistente == null)
+                        return NotFound($"Produto com ID {produtoPedido.Id} não encontrado.");
+
+                    if (produtoExistente.Quantidade < produtoPedido.Quantidade)
+                        return BadRequest($"Estoque insuficiente para o produto {produtoExistente.Nome}.");
+
+                    produtoExistente.Quantidade -= produtoPedido.Quantidade;
+
+                    _context.Produtos.Update(produtoExistente);
+
+                    valorProdutosSomados += produtoPedido.Quantidade * produtoExistente.Valor;
+                }
+
+                if (Math.Round(valorProdutosSomados, 2) != Math.Round(pedido.Valor, 2))
+                    return BadRequest("Valor do Pedido diferente da soma dos produtos");
+
+                var pedidoEntity = new PedidosEntity
+                {
+                    Cliente = clienteEntity,
+                    StatusPedido = API.Enums.EStatusPedido.Aberto,
+                    Valor = pedido.Valor,
+                    PedidoProdutos = pedido.Produtos
+                        .Select(dto => new PedidoProdutoEntity
                         {
-                            Valor = pp.Produto.Valor,
-                            Nome = pp.Produto.Nome,
-                            Quantidade = pp.Produto.Quantidade
-                        }
+                            ProdutoId = dto.Id,
+                            Quantidade = dto.Quantidade
+                        })
+                        .ToList()
+                };
 
-                    }).ToList(),
-                    Cliente = new ClienteDto
+                _context.Pedidos.Add(pedidoEntity);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                var pedidoConsulta = await _context.Pedidos
+                    .Include(p => p.PedidoProdutos)
+                        .ThenInclude(pp => pp.Produto)
+                    .Include(p => p.Cliente)
+                    .Where(p => p.Id == pedidoEntity.Id)
+                    .Select(p => new PedidoResponseDto
                     {
-                        Nome = p.Cliente.Nome,
-                        TelefoneCelular = p.Cliente.TelefoneCelular,
-                        Email = p.Cliente.Email,
-                    }
-                })
-                .FirstOrDefaultAsync();
+                        Id = p.Id,
+                        CodigoCliente = p.Cliente.Id,
+                        Data = p.Data,
+                        StatusPedido = p.StatusPedido,
+                        Valor = p.Valor,
+                        Produtos = p.PedidoProdutos.Select(pp => new ProdutoPedidoDto
+                        {
+                            Id = pp.ProdutoId,
+                            Quantidade = pp.Quantidade,
+                            Produto = new ProdutoDto
+                            {
+                                Valor = pp.Produto.Valor,
+                                Nome = pp.Produto.Nome,
+                                Quantidade = pp.Produto.Quantidade
+                            }
+                        }).ToList(),
+                        Cliente = new ClienteDto
+                        {
+                            Nome = p.Cliente.Nome,
+                            TelefoneCelular = p.Cliente.TelefoneCelular,
+                            Email = p.Cliente.Email,
+                        }
+                    })
+                    .FirstOrDefaultAsync();
 
-            if (pedidoConsulta == null)
-                return StatusCode(500,"Não foi possivel cadastrar o pedido");
+                if (pedidoConsulta == null)
+                    return StatusCode(500,"Não foi possível cadastrar o pedido");
 
-            // Registrar movimentação no Fluxo de Caixa
-            var fluxoCaixaEntity = new FluxoCaixaEntity
+                var fluxoCaixaEntity = new FluxoCaixaEntity
+                {
+                    Tipo = "Entrada",
+                    Valor = pedidoEntity.Valor,
+                    Origem = "Venda de Produtos",
+                    Descricao = $"Pedido #{pedidoEntity.Id} - Cliente: #{pedidoEntity.Cliente.Nome}"
+                };
+
+                await _context.FluxoCaixa.AddAsync(fluxoCaixaEntity);
+                await _context.SaveChangesAsync();
+
+                return Created($"/pedidos/{pedidoConsulta.Id}", pedidoConsulta);
+            }
+            catch (Exception ex)
             {
-                Tipo = "Entrada",
-                Valor = pedidoEntity.Valor,
-                Origem = "Venda de Produtos",
-                Descricao = $"Pedido #{pedidoEntity.Id} - Cliente: #{pedidoEntity.Cliente.Nome}"
-            };
-
-            await _context.FluxoCaixa.AddAsync(fluxoCaixaEntity);
-            await _context.SaveChangesAsync();
-
-            return Created($"/pedidos/{pedidoConsulta.Id}", pedidoConsulta);
-
+                await transaction.RollbackAsync();
+                return StatusCode(500, $"Erro ao salvar pedido: {ex.Message}");
+            }
         }
 
         [HttpPut("/pedidos/{id:int}")]

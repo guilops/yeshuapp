@@ -65,8 +65,13 @@
                                 <td>@Model.Produtos[i].Valor.ToString("C")</td>
                                 <td class="subtotal">@Model.Produtos[i].Valor.ToString("C")</td>
                                 <td>
-                                    <input type="number" name="Produtos[@i].Quantidade" class="form-control quantidade-produto-estoque" min="0"
-                                           value="@Model.Produtos[i].Quantidade" readonly />
+                                    <input type="number" 
+                                           name="Produtos[@i].Quantidade" 
+                                           class="form-control quantidade-produto-estoque" 
+                                           min="0"
+                                           value="@Model.Produtos[i].Quantidade" 
+                                           readonly 
+                                           data-estoque-original="@Model.Produtos[i].Quantidade" />
                                 </td>
                             </tr>
                         }
@@ -94,11 +99,6 @@
                 let total = 0;
                 const produtos = document.querySelectorAll('.quantidade-produto');
 
-                // Obter a quantidade anterior do estoque apenas para o produto que está sendo alterado
-                const estoqueInput = document.querySelector(`input[name="Produtos[${index}].Quantidade"]`);
-                const estoque = parseInt(estoqueInput.value) || 0;
-                const quantidadeAnterior = parseInt(input.dataset.quantidadeAnterior) || 0; // Usar data attribute para armazenar quantidade anterior
-
                 produtos.forEach((prodInput, idx) => {
                     const quantidade = parseInt(prodInput.value) || 0;
                     const valor = parseFloat(document.querySelector(`input[name="Pedido.Produtos[${idx}].Valor"]`).value) || 0;
@@ -106,24 +106,20 @@
                     document.querySelectorAll('.subtotal')[idx].innerText = subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                     total += subtotal;
 
-                    // Lógica para atualizar apenas o estoque do produto que está sendo alterado
-                    if (idx === index) { // Verifica se é o índice do produto que está sendo alterado
-                        // Calcular a diferença entre a nova quantidade e a quantidade anterior
-                        const diferenca = quantidade - quantidadeAnterior;
+                    if (idx === index) {
+                        const estoqueInput = document.querySelector(`input[name="Produtos[${idx}].Quantidade"]`);
+                        const estoqueOriginal = parseInt(estoqueInput.getAttribute('data-estoque-original')) || 0;
 
-                        if (quantidade > estoque) {
-                            prodInput.value = estoque; // Se a quantidade for maior que o estoque, redefine para o valor máximo
+                        if (quantidade > estoqueOriginal) {
+                            prodInput.value = estoqueOriginal; // limita à quantidade disponível
                             alert("A quantidade solicitada excede o estoque disponível!");
-                        } else {
-                            estoqueInput.value = estoque - diferenca; // Atualiza a quantidade do estoque com a diferença
                         }
 
-                        // Atualiza o data attribute com a nova quantidade
-                        prodInput.dataset.quantidadeAnterior = quantidade;
+                        estoqueInput.value = estoqueOriginal - parseInt(prodInput.value);
                     }
                 });
 
-                // Atualizar o valor total
+                // Atualiza o valor total com vírgula decimal pt-BR
                 document.querySelector('input[name="Pedido.Valor"]').value = total.toFixed(2).replace('.', ',');
             }
         </script>
