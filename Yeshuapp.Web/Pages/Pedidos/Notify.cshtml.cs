@@ -14,6 +14,8 @@ namespace Yeshuapp.Web.Pages.Pedidos
 {
     public class NotifyModel : PageModel
     {
+        public string WhatsAppUrl { get; set; }
+
         [BindProperty]
         public PedidoResponseDto Pedido { get; set; }
         private readonly PedidosServices _pedidosServices;
@@ -60,12 +62,36 @@ namespace Yeshuapp.Web.Pages.Pedidos
                 var mensagemEnviar = MontarMensagemNotificacao(Pedido);
 
                 if (eCanal == ECanalNotificacao.Whatsapp)
-                    EnviarMensagemWhatsApp(Pedido.Cliente.TelefoneCelular, mensagemEnviar);
+                {
+                    WhatsAppUrl = GerarLinkWhatsApp(Pedido.Cliente.TelefoneCelular, mensagemEnviar);
+                    // Não redireciona, fica na mesma página e abre o WhatsApp pelo script no cshtml
+                    return Page();
+                }
                 else
+                {
                     EnviarMensagemEmail(Pedido.Cliente.Email, mensagemEnviar);
+                    // Pode mostrar alguma mensagem de sucesso, ou só voltar para a mesma página
+                    return Page();
+                }
             }
 
+            // Se deu erro ao buscar pedido, volta para index
             return RedirectToPage("/Pedidos/Index");
+        }
+
+
+        private string GerarLinkWhatsApp(string numero, string mensagem)
+        {
+            numero = numero.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
+
+            if (!numero.StartsWith("11"))
+                numero = $"11{numero}";
+
+            if (!numero.StartsWith("55"))
+                numero = $"55{numero}";
+
+            string mensagemCodificada = HttpUtility.UrlEncode(mensagem);
+            return $"https://wa.me/{numero}?text={mensagemCodificada}";
         }
 
         private void EnviarMensagemEmail(string emailDestinatario, string mensagemEnviar)
@@ -114,27 +140,6 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
             return mensagem.ToString();
 
-        }
-
-        public static void EnviarMensagemWhatsApp(string numero, string mensagem)
-        {
-            // Remove caracteres indesejados do n�mero
-            numero = numero.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
-
-            if (!numero.StartsWith("11"))
-                numero = $"11{numero}";
-
-            if (!numero.StartsWith("55"))
-                numero = $"55{numero}";
-
-            // Codifica a mensagem para ser usada na URL
-            string mensagemCodificada = HttpUtility.UrlEncode(mensagem);
-
-            // Monta a URL para o wa.me
-            string url = $"https://wa.me/{numero}?text={mensagemCodificada}";
-
-            // Abre a URL no navegador padr�o
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
     }
 }

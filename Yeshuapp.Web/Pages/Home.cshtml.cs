@@ -34,7 +34,10 @@ namespace Yeshuapp.Web.Pages
             var token = handler.ReadJwtToken(jwtToken);
             var username = token.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.NameId)?.Value;
 
-            var hora = DateTime.Now.Hour;
+            var fusoHorario = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
+            var horaBrasilia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, fusoHorario);
+            var hora = horaBrasilia.Hour;
+
             if (hora >= 5 && hora < 12)
                 Saudacao = "Bom dia";
             else if (hora >= 12 && hora < 18)
