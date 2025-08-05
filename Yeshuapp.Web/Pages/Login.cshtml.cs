@@ -32,13 +32,13 @@ public class LoginModel : PageModel
 
             var dtoToken = JsonConvert.DeserializeObject<TokenDto>(token);
 
-            Response.Cookies.Append("jwtToken", dtoToken.token, new CookieOptions { HttpOnly = true, Secure = true });  
+            Response.Cookies.Append("jwtToken", dtoToken.token, new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None });  
 
             return RedirectToPage("/Home");
         }
         else
         {
-            ModelState.AddModelError(string.Empty, "Login inválido.");
+            ModelState.AddModelError(string.Empty, "Login invalido.");
             return Page();
         }
     }

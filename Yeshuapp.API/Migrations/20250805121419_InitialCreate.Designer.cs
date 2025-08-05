@@ -12,7 +12,7 @@ using Yeshuapp.Context;
 namespace Yeshuapp.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250804203212_InitialCreate")]
+    [Migration("20250805121419_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

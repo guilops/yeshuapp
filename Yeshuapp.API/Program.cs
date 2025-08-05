@@ -99,7 +99,21 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.WithOrigins("https://yeshuapp-front.onrender.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
+
+
 var app = builder.Build();
+
+app.UseCors("CorsPolicy");
 
 var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
