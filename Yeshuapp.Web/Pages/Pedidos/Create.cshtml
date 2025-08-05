@@ -112,7 +112,7 @@
                 });
 
                 // Atualizar o valor total
-                document.querySelector('input[name="Pedido.Valor"]').value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                document.querySelector('input[name="Pedido.Valor"]').value = total.toFixed(2).replace('.', ',');
             }
         </script>
     }

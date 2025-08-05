@@ -10,6 +10,7 @@ using Yeshuapp.Dtos;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("auth/")]
     public class LoginController : ControllerBase
     {
@@ -25,23 +26,21 @@ namespace Yeshuapp.Controllers
             _configuration = configuration;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Senha))
-                return Unauthorized("Credenciais inválidas");
+                return Unauthorized("Credenciais invï¿½lidas");
 
             var token = GerarTokenJwt(user);
 
             if (string.IsNullOrEmpty(token))
-                return StatusCode(500, "Não foi possível gerar o token solicitado");
+                return StatusCode(500, "Nï¿½o foi possï¿½vel gerar o token solicitado");
 
             return Ok(new { token });
         }
 
-        [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateUserDto createDto)
         {
@@ -67,7 +66,7 @@ namespace Yeshuapp.Controllers
                 {
                     erros += error.Description;
                 }
-                return StatusCode(500, $"Houveram erros ao criar o usuário {erros}");
+                return StatusCode(500, $"Houveram erros ao criar o usuï¿½rio {erros}");
             }
         }
 

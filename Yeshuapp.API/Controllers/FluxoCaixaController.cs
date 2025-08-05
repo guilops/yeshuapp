@@ -5,7 +5,6 @@ using Yeshuapp.Context;
 using Yeshuapp.Dtos;
 
 [ApiController]
-[AllowAnonymous]
 [Route("[controller]")]
 public class FluxoCaixaController : ControllerBase
 {
