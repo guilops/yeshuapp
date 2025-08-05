@@ -17,37 +17,42 @@
             </p>
         </blockquote>
     }
-</div>
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Próximos Eventos</h2>
-    <div class="row justify-content-center">
-        @if (Model.Eventos != null && Model.Eventos.Any())
-        {
-            foreach (var evento in Model.Eventos)
+    // ...existing code...
+    <div class="eventos-section" style="margin-top:2rem;">
+        <h3 class="mb-4" style="font-weight:600; color:#2c3e50;">Próximos Eventos</h3>
+        <div class="row justify-content-center">
+            @if (Model.Eventos != null && Model.Eventos.Any())
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@evento.Nome</h5>
-                            <p class="card-text">
-                                <strong>Data:</strong> @evento.DataEvento.ToString("dd/MM/yyyy")<br />
-                                <strong>Local:</strong> @evento.Local
-                            </p>
-                            @if (!string.IsNullOrEmpty(evento.Descricao))
-                            {
-                                <p class="card-text">@evento.Descricao</p>
-                            }
+                @foreach (var evento in Model.Eventos)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100 border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <span style="font-size:1.1rem; font-weight:500;">@evento.Descricao</span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text mb-2">
+                                    <i class="bi bi-calendar-event"></i>
+                                    <strong> Data:</strong> @evento.Data
+                                    <br />
+                                    <i class="bi bi-clock"></i>
+                                    <strong> Horário:</strong> @evento.Horario
+                                </p>
+                                @if (!string.IsNullOrEmpty(evento.Detalhes))
+                                {
+                                    <p class="card-text text-muted">@evento.Detalhes</p>
+                                }
+                            </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Nenhum próximo evento.</p>
                 </div>
             }
-        }
-        else
-        {
-            <div class="col-12 text-center">
-                <p>Nenhum evento encontrado.</p>
-            </div>
-        }
+        </div>
     </div>
-</div>
