@@ -13,12 +13,9 @@ namespace Yeshuapp.Web.Pages.Eventos
         private readonly EventosServices _eventosServices;
 
         private readonly JsonSerializerOptions options;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        
-        public EditModel(EventosServices eventoServices,
-                         IHttpContextAccessor httpContextAccessor)
+
+        public EditModel(EventosServices eventoServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _eventosServices = eventoServices;
             options = new JsonSerializerOptions
             {
@@ -29,7 +26,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _eventosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _eventosServices.GetEventoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -44,7 +41,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _eventosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _eventosServices.UpdateEventoAsync(Evento);
 
             if (response.IsSuccessStatusCode)

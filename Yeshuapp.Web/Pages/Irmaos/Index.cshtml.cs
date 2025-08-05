@@ -9,11 +9,9 @@ namespace Yeshuapp.Web.Pages.Irmaos
     public class IndexModel : PageModel
     {
         private readonly IrmaosServices _irmaosServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(IrmaosServices irmaosServices,IHttpContextAccessor httpContextAccessor)
+        public IndexModel(IrmaosServices irmaosServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _irmaosServices = irmaosServices;
         }
         [BindProperty]
@@ -21,7 +19,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
+            var token = Request.Cookies["jwtToken"];
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");

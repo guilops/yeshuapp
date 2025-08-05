@@ -12,12 +12,10 @@ namespace Yeshuapp.Web.Pages.Produtos
         private readonly ProdutosServices _produtosServices;
 
         private readonly JsonSerializerOptions options;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DeleteModel(ProdutosServices produtosServices, IHttpContextAccessor httpContextAccessor)
+        public DeleteModel(ProdutosServices produtosServices)
         {
             _produtosServices = produtosServices;
-            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -27,7 +25,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _produtosServices.GetProdutoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -42,7 +40,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _produtosServices.DeleteProdutoAsync(Produto.Id);
 
             if (response.IsSuccessStatusCode)

@@ -17,14 +17,12 @@ namespace Yeshuapp.Web.Pages.Pedidos
         [BindProperty]
         public PedidoResponseDto Pedido { get; set; }
         private readonly PedidosServices _pedidosServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private readonly JsonSerializerOptions options;
 
-        public NotifyModel(PedidosServices pedidosServices, IHttpContextAccessor httpContextAccessor)
+        public NotifyModel(PedidosServices pedidosServices)
         {
             _pedidosServices = pedidosServices;
-            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -34,7 +32,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _pedidosServices.GetPedidoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -49,7 +47,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync(string metodoNotificacao)
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var eCanal = (ECanalNotificacao)Enum.Parse(typeof(ECanalNotificacao), metodoNotificacao, true);
 
             var response = await _pedidosServices.GetPedidoByIdAsync(Pedido.Id);

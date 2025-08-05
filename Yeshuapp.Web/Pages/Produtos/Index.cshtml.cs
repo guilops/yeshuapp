@@ -7,19 +7,17 @@ namespace Yeshuapp.Web.Pages.Produtos
     public class IndexModel : PageModel
     {
         private readonly ProdutosServices _produtosServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(ProdutosServices produtosServices, IHttpContextAccessor httpContextAccessor)
+        public IndexModel(ProdutosServices produtosServices)
         {
             _produtosServices = produtosServices;
-            _httpContextAccessor = httpContextAccessor;
         }
         [BindProperty]
         public List<ProdutoDto>? Produtos { get; set; } = new List<ProdutoDto>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
+            var token = Request.Cookies["jwtToken"];
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");

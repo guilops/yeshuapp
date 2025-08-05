@@ -9,11 +9,9 @@ namespace Yeshuapp.Web.Pages.Eventos
         [BindProperty]
         public EventoDto Evento { get; set; } = new EventoDto();
         private readonly EventosServices _eventosServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateModel(EventosServices eventoServices,IHttpContextAccessor httpContextAccessor)
+        public CreateModel(EventosServices eventoServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _eventosServices = eventoServices;
         }
 
@@ -21,7 +19,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _eventosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _eventosServices.CreateEventoAsync(Evento);
 
             if (response.IsSuccessStatusCode)

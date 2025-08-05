@@ -11,27 +11,24 @@ namespace Yeshuapp.Web.Pages.Pedidos
         public PedidoResponseDto Pedido { get; set; } = new PedidoResponseDto();
         [BindProperty]
         public List<ProdutoDto>? Produtos { get; set; } = new List<ProdutoDto>();
-        private readonly IHttpContextAccessor _httpContextAccessor;
         public List<SelectListItem> Irmaos { get; set; }
         private readonly PedidosServices _pedidosServices;
         private readonly ProdutosServices _produtosServices;
         private readonly IrmaosServices _irmaosServices;
         public string ErrorMessage;
 
-        public CreateModel(PedidosServices pedidoServices, ProdutosServices produtosServices, IrmaosServices irmaosServices,
-                           IHttpContextAccessor httpContextAccessor)
+        public CreateModel(PedidosServices pedidoServices, ProdutosServices produtosServices, IrmaosServices irmaosServices)
         {
             _pedidosServices = pedidoServices;
             _produtosServices = produtosServices;
             _irmaosServices = irmaosServices;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var resultProdutos = await _produtosServices.GetProdutosAsync();
             var resultIrmaos = await _irmaosServices.GetIrmaosAsync();
 
@@ -58,9 +55,9 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             Pedido.Data = DateTime.Now;
             Pedido.StatusPedido = Enums.EStatusPedido.Aberto;
             Pedido.Cliente = await (await _irmaosServices.GetIrmaoByIdAsync(Pedido.CodigoCliente)).Content.ReadFromJsonAsync<ClienteRequestDto>();

@@ -8,12 +8,10 @@ namespace Yeshuapp.Web.Pages.Produtos
     {
         [BindProperty]
         public ProdutoDto Produto { get; set; } = new ProdutoDto();
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ProdutosServices _produtosServices;
 
-        public CreateModel(ProdutosServices produtosServices,IHttpContextAccessor httpContextAccessor)
+        public CreateModel(ProdutosServices produtosServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _produtosServices = produtosServices;
         }
 
@@ -21,7 +19,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             // Verifique se a imagem foi enviada
             if (imagemFile != null && imagemFile.Length > 0)
             {

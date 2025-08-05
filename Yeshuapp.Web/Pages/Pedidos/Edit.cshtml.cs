@@ -15,23 +15,20 @@ namespace Yeshuapp.Web.Pages.Pedidos
         private readonly PedidosServices _pedidosServices;
         private readonly ProdutosServices _produtosServices;
         private readonly IrmaosServices _irmaosServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         public string ErrorMessage;
 
-        public EditModel(PedidosServices pedidosServices, ProdutosServices produtosServices, IrmaosServices irmaosServices,
-                         IHttpContextAccessor httpContextAccessor)
+        public EditModel(PedidosServices pedidosServices, ProdutosServices produtosServices, IrmaosServices irmaosServices)
         {
             _pedidosServices = pedidosServices;
             _produtosServices = produtosServices;
             _irmaosServices = irmaosServices;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
-            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
 
             var resultPedido = await _pedidosServices.GetPedidoByIdAsync(id);
             var resultProdutos = await _produtosServices.GetProdutosAsync();
@@ -76,7 +73,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             Pedido.Data = DateTime.Now;
             Pedido.StatusPedido = Enums.EStatusPedido.Aberto;
             Pedido.Cliente = await (await _irmaosServices.GetIrmaoByIdAsync(Pedido.CodigoCliente)).Content.ReadFromJsonAsync<ClienteRequestDto>();

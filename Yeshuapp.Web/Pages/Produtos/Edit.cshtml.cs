@@ -12,12 +12,10 @@ namespace Yeshuapp.Web.Pages.Produtos
         private readonly ProdutosServices _produtosServices;
 
         private readonly JsonSerializerOptions options;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EditModel(ProdutosServices irmaosServices, IHttpContextAccessor httpContextAccessor)
+        public EditModel(ProdutosServices irmaosServices)
         {
             _produtosServices = irmaosServices;
-            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -27,7 +25,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             var response = await _produtosServices.GetProdutoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -42,7 +40,7 @@ namespace Yeshuapp.Web.Pages.Produtos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
-            _produtosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
+            _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
             if (imagemFile != null && imagemFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())

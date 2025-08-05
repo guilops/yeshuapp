@@ -11,12 +11,9 @@ namespace Yeshuapp.Web.Pages.FluxoCaixa
         public DateTime Fim { get; set; } = DateTime.Now;
 
         private readonly FluxoCaixaServices _fluxoCaixaServices;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(FluxoCaixaServices fluxoCaixaServices,
-                        IHttpContextAccessor httpContextAccessor)
+        public IndexModel(FluxoCaixaServices fluxoCaixaServices)
         {
-            _httpContextAccessor = httpContextAccessor;
             _fluxoCaixaServices = fluxoCaixaServices;
         }
         public async Task<IActionResult> OnGetAsync(DateTime? inicio, DateTime? fim)
@@ -24,7 +21,7 @@ namespace Yeshuapp.Web.Pages.FluxoCaixa
             Inicio = inicio ?? Inicio;
             Fim = fim ?? Fim;
 
-            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
+            var token = Request.Cookies["jwtToken"];
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");
