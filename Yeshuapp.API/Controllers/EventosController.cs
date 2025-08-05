@@ -9,8 +9,7 @@ namespace Yeshuapp.Controllers
 {
     [ApiController]
     [AllowAnonymous]
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("[controller]")]
     
     public class EventosController : ControllerBase
     {

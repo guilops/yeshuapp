@@ -14,7 +14,7 @@ public class FrasesServices
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        urlBase = _configuration["baseApiUrl"];
+        urlBase = "https://yeshuapp.onrender.com";
     }
 
     public void SetAuthorizationHeader(string token)

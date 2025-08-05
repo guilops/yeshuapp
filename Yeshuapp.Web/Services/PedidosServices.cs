@@ -14,7 +14,7 @@ public class PedidosServices
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        urlBase = _configuration["baseApiUrl"];
+        urlBase = "https://yeshuapp.onrender.com";
     }
 
     public async Task<HttpResponseMessage> GetPedidosAsync()
