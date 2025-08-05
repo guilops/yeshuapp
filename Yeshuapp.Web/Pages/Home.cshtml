@@ -1,12 +1,18 @@
 ﻿@page
 @model HomeModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Casa de Oração Yeshua";
     var frase = Model.Frases?.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
 }
 
+@if (!string.IsNullOrEmpty(Model.Saudacao))
+{
+    <h4 style="font-family: 'Merriweather', serif; font-size: 1.25rem; font-weight: 500; color: #2C3E50;">
+        @Model.Saudacao
+    </h4>
+}
+
 <div class="text-center">
-    <img src="~/logo3.png" style="max-width: 100px;" alt="Logo" />
     <br />
     @if (frase != null)
     {
@@ -18,7 +24,6 @@
         </blockquote>
     }
 
-    // ...existing code...
     <div class="eventos-section" style="margin-top:2rem;">
         <h3 class="mb-4" style="font-weight:600; color:#2c3e50;">Próximos Eventos</h3>
         <div class="row justify-content-center">
@@ -34,7 +39,7 @@
                             <div class="card-body">
                                 <p class="card-text mb-2">
                                     <i class="bi bi-calendar-event"></i>
-                                    <strong> Data:</strong> @evento.Data
+                                    <strong> Data:</strong> @DateTime.Parse(evento.Data).ToString("dd/MM/yyyy")
                                     <br />
                                     <i class="bi bi-clock"></i>
                                     <strong> Horário:</strong> @evento.Horario

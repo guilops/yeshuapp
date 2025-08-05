@@ -41,7 +41,7 @@ public class FluxoCaixaController : ControllerBase
             .OrderBy(fc => fc.Data)
             .Select(fc => new FluxoCaixaDto
             {
-                Data = fc.Data,
+                Data = DateTime.SpecifyKind(fc.Data, DateTimeKind.Utc),
                 Tipo = fc.Tipo,
                 Valor = fc.Valor,
                 Origem = fc.Origem,

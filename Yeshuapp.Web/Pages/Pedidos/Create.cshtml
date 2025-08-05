@@ -12,6 +12,18 @@
     </div>
 }
 
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+{
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <body>
@@ -22,7 +34,7 @@
             <div class="form-group">
                 <label asp-for="Pedido.CodigoCliente">Cliente</label>
                 <select asp-for="Pedido.CodigoCliente" asp-items="Model.Irmaos" class="form-control" required>
-                    <option value="">Selecione um cliente</option>
+                    <option value="">Selecione um irmão</option>
                 </select>
                 <span asp-validation-for="Pedido.CodigoCliente" class="text-danger"></span>
             </div>

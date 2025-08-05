@@ -20,6 +20,12 @@ namespace Yeshuapp.Context
             modelBuilder.Entity<PedidoProdutoEntity>()
                 .HasKey(pp => new { pp.PedidoId, pp.ProdutoId });
 
+                modelBuilder.Entity<FluxoCaixaEntity>()
+                .Property(e => e.Data)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
             base.OnModelCreating(modelBuilder);
         }
     }

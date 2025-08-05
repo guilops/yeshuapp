@@ -40,7 +40,7 @@ public class LoginModel : PageModel
             return RedirectToPage("/Home");
         }
 
-        ModelState.AddModelError(string.Empty, "Login invalido.");
+        ModelState.AddModelError(string.Empty, "Usuario ou senha incorretos.");
         return Page();
         
     }

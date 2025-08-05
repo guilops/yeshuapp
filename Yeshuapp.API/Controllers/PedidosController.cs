@@ -131,7 +131,6 @@ namespace Yeshuapp.Controllers
             var pedidoEntity = new PedidosEntity
             {
                 Cliente = clienteEntity,
-                Data = pedido.Data,
                 StatusPedido = API.Enums.EStatusPedido.Aberto,
                 Valor = pedido.Valor,
                 PedidoProdutos = pedido.Produtos
@@ -185,7 +184,6 @@ namespace Yeshuapp.Controllers
             // Registrar movimentação no Fluxo de Caixa
             var fluxoCaixaEntity = new FluxoCaixaEntity
             {
-                Data = DateTime.Now,
                 Tipo = "Entrada",
                 Valor = pedidoEntity.Valor,
                 Origem = "Venda de Produtos",

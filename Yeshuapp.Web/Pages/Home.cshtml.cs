@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Yeshuapp.Dtos;
@@ -14,6 +15,8 @@ namespace Yeshuapp.Web.Pages
         [BindProperty]
         public List<EventoDto> Eventos { get; set; } = new List<EventoDto>();
 
+        public string Saudacao { get; set; } = string.Empty;
+
         public HomeModel(FrasesServices frasesServices,EventosServices eventosServices)
         {
             _frasesServices = frasesServices;
@@ -22,8 +25,25 @@ namespace Yeshuapp.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
-            _frasesServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
-            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            var jwtToken = Request.Cookies["jwtToken"] ?? throw new UnauthorizedAccessException("Token JWT nao encontrado.");
+            
+            _frasesServices.SetAuthorizationHeader(jwtToken);
+            _eventosServices.SetAuthorizationHeader(jwtToken);
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwtToken);
+            var username = token.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.NameId)?.Value;
+
+            var hora = DateTime.Now.Hour;
+            if (hora >= 5 && hora < 12)
+                Saudacao = "Bom dia";
+            else if (hora >= 12 && hora < 18)
+                Saudacao = "Boa tarde";
+            else
+                Saudacao = "Boa noite";
+
+            if (!string.IsNullOrEmpty(username))
+                Saudacao += $", {username}";
 
             var result = await _frasesServices.GetFrasesAsync();
 

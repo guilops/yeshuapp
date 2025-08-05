@@ -4,6 +4,18 @@
     Layout = "_LayoutLogin";
 }
 
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+{
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
