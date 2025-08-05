@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
 using Yeshuapp.Dtos;
 
 [ApiController]
+[AllowAnonymous]
 [Route("[controller]")]
 public class FluxoCaixaController : ControllerBase
 {
@@ -18,7 +20,7 @@ public class FluxoCaixaController : ControllerBase
     public async Task<IActionResult> ObterRelatorioFluxoCaixa(
         [FromQuery] DateTime? dataInicio,
         [FromQuery] DateTime? dataFim,
-        [FromQuery] string tipo // "Entrada", "Saída" ou nulo para todos
+        [FromQuery] string tipo // "Entrada", "Saï¿½da" ou nulo para todos
     )
     {
         // Base da query
@@ -50,7 +52,7 @@ public class FluxoCaixaController : ControllerBase
 
         // Calcular totais
         var totalEntrada = resultado.Where(fc => fc.Tipo == "Entrada").Sum(fc => fc.Valor);
-        var totalSaida = resultado.Where(fc => fc.Tipo == "Saída").Sum(fc => fc.Valor);
+        var totalSaida = resultado.Where(fc => fc.Tipo == "Saï¿½da").Sum(fc => fc.Valor);
 
         var resumo = new
         {

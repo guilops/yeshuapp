@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
@@ -7,6 +8,7 @@ using Yeshuapp.Entities;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class IrmaosController : ControllerBase
     {
@@ -24,7 +26,7 @@ namespace Yeshuapp.Controllers
         {
             var result = _context.Clientes.ToList();
 
-            if (result.Count == 0) return NotFound("Nenhum irmão foi localizado");
+            if (result.Count == 0) return NotFound("Nenhum irmï¿½o foi localizado");
 
             return Ok(result);
         }
@@ -34,7 +36,7 @@ namespace Yeshuapp.Controllers
         {
             var clienteEntity = _context.Clientes.FirstOrDefault(x => x.Id == id);
 
-            if (clienteEntity is null) return NotFound("Irmão não localizado");
+            if (clienteEntity is null) return NotFound("Irmï¿½o nï¿½o localizado");
 
             return Ok(clienteEntity);
         }
@@ -65,7 +67,7 @@ namespace Yeshuapp.Controllers
         {
             var clienteEntity = _context.Clientes.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (clienteEntity is null) return NotFound("Irmão não localizado");
+            if (clienteEntity is null) return NotFound("Irmï¿½o nï¿½o localizado");
 
             clienteEntity.Nome = clienteDto.Nome;
             clienteEntity.CPF = clienteDto.CPF;
@@ -88,17 +90,17 @@ namespace Yeshuapp.Controllers
         {
             var clienteEntity = _context.Clientes.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (clienteEntity is null) return NotFound("Irmão não localizado");
+            if (clienteEntity is null) return NotFound("Irmï¿½o nï¿½o localizado");
 
             var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido == API.Enums.EStatusPedido.Aberto);
 
             if (pedidosExistentes)
-                return BadRequest("Não é possível excluir o irmão, pois existem pedidos em aberto associados a ele.");
+                return BadRequest("Nï¿½o ï¿½ possï¿½vel excluir o irmï¿½o, pois existem pedidos em aberto associados a ele.");
 
             _context.Clientes.Remove(clienteEntity);
             await _context.SaveChangesAsync();
 
-            return Ok("Irmão excluído com sucesso");
+            return Ok("Irmï¿½o excluï¿½do com sucesso");
         }
     }
 }

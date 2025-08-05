@@ -12,10 +12,14 @@ namespace Yeshuapp.Web.Pages.Irmaos
         private readonly IrmaosServices _irmaosServices;
 
         private readonly JsonSerializerOptions options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EditModel(IrmaosServices irmaosServices)
+        public EditModel(IrmaosServices irmaosServices,
+                         IHttpContextAccessor httpContextAccessor)
         {
             _irmaosServices = irmaosServices;
+            _httpContextAccessor = httpContextAccessor;
+
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -25,7 +29,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _irmaosServices.GetIrmaoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -42,7 +46,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
-            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             if (imagemFile != null && imagemFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())

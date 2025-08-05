@@ -4,8 +4,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddHttpClient();
 builder.Services.AddCustomHttpClients(builder.Configuration["baseApiUrl"]?.ToString());
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -18,17 +29,20 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+
 app.UseEndpoints(endpoints =>
 {
-    // Redireciona a raiz para a página de Login
+    // Redireciona a raiz para a pï¿½gina de Login
     endpoints.MapGet("/", async context =>
     {
         context.Response.Redirect("/Login");
-        await Task.CompletedTask; // Garantir que o método seja assíncrono
+        await Task.CompletedTask; // Garantir que o mï¿½todo seja assï¿½ncrono
     });
     endpoints.MapRazorPages();
 });

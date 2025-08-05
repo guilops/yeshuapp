@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
@@ -7,6 +8,7 @@ using Yeshuapp.Entities;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class PedidosController : ControllerBase
     {

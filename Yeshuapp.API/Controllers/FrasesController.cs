@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
@@ -7,6 +8,7 @@ using Yeshuapp.Entities;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class FrasesController : ControllerBase
     {
@@ -24,7 +26,7 @@ namespace Yeshuapp.Controllers
         {
             var frases = _context.Frases.ToList();
 
-            if (frases.Count == 0) return NotFound("Frases não localizadas");
+            if (frases.Count == 0) return NotFound("Frases nï¿½o localizadas");
 
             return Ok(frases);
         }
@@ -34,7 +36,7 @@ namespace Yeshuapp.Controllers
         {
             var fraseEntity = _context.Frases.FirstOrDefault(x => x.Id == id);
 
-            if (fraseEntity is null) return NotFound("Frase não localizada");
+            if (fraseEntity is null) return NotFound("Frase nï¿½o localizada");
 
             return Ok(fraseEntity);
         }
@@ -82,7 +84,7 @@ namespace Yeshuapp.Controllers
         {
             var fraseEntity = _context.Frases.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (fraseEntity is null) return NotFound("Frase não localizada");
+            if (fraseEntity is null) return NotFound("Frase nï¿½o localizada");
 
             fraseEntity.Passagem = frase.Passagem;
             fraseEntity.Livro = frase.Livro;
@@ -102,12 +104,12 @@ namespace Yeshuapp.Controllers
         {
             var fraseEntity = _context.Frases.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (fraseEntity is null) return NotFound("Frase não localizada");
+            if (fraseEntity is null) return NotFound("Frase nï¿½o localizada");
 
             _context.Frases.Remove(fraseEntity);
             await _context.SaveChangesAsync();
 
-            return Ok("Frase excluído com sucesso");
+            return Ok("Frase excluï¿½do com sucesso");
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
@@ -7,6 +8,7 @@ using Yeshuapp.Entities;
 namespace Yeshuapp.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class ProdutosController : ControllerBase
     {
@@ -24,7 +26,7 @@ namespace Yeshuapp.Controllers
         {
             var result = _context.Produtos.ToList();
 
-            if (result.Count == 0) return NotFound("Produtos não localizados");
+            if (result.Count == 0) return NotFound("Produtos nï¿½o localizados");
 
             return Ok(result);
         }
@@ -34,7 +36,7 @@ namespace Yeshuapp.Controllers
         {
             var produtosEntity = _context.Produtos.FirstOrDefault(x=> x.Id == id);
 
-            if (produtosEntity is null) return NotFound("Produto não localizado");
+            if (produtosEntity is null) return NotFound("Produto nï¿½o localizado");
 
             return Ok(produtosEntity);
         }
@@ -60,7 +62,7 @@ namespace Yeshuapp.Controllers
         {
             var produtoEntity = _context.Produtos.FirstOrDefaultAsync(x=> x.Id==id).Result;    
 
-            if (produtoEntity is null) return NotFound("Produto não localizado");
+            if (produtoEntity is null) return NotFound("Produto nï¿½o localizado");
 
             produtoEntity.Nome = produto.Nome;
             produtoEntity.Quantidade = produto.Quantidade;
@@ -78,17 +80,17 @@ namespace Yeshuapp.Controllers
         {
             var produtoEntity = _context.Produtos.FirstOrDefaultAsync(x => x.Id == id).Result;
 
-            if (produtoEntity is null) return NotFound("Produto não localizado");
+            if (produtoEntity is null) return NotFound("Produto nï¿½o localizado");
 
             var pedidosExistentes = await _context.Pedidos.AnyAsync(p => p.Cliente.Id == id && p.StatusPedido == API.Enums.EStatusPedido.Aberto);
 
             if (pedidosExistentes)
-                return BadRequest("Não é possível excluir o produto, pois existem pedidos ativos associados a ele.");
+                return BadRequest("Nï¿½o ï¿½ possï¿½vel excluir o produto, pois existem pedidos ativos associados a ele.");
 
             _context.Produtos.Remove(produtoEntity);
             await _context.SaveChangesAsync();
 
-            return Ok("Produto excluído com sucesso");
+            return Ok("Produto excluï¿½do com sucesso");
         }
     }
 }
