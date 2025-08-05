@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Yeshuapp.Web.Dtos;
+using System;
 
 public class LoginModel : PageModel
 {
@@ -40,7 +41,7 @@ public class LoginModel : PageModel
         }
 
         ModelState.AddModelError(string.Empty, "Login invalido.");
-        return Page();
+        return RedirectToPage("/Home");
         
     }
 }

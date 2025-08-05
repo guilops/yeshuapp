@@ -17,12 +17,14 @@ namespace Yeshuapp.Web.Pages.Pedidos
         [BindProperty]
         public PedidoResponseDto Pedido { get; set; }
         private readonly PedidosServices _pedidosServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private readonly JsonSerializerOptions options;
 
-        public NotifyModel(PedidosServices pedidosServices)
+        public NotifyModel(PedidosServices pedidosServices, IHttpContextAccessor httpContextAccessor)
         {
             _pedidosServices = pedidosServices;
+            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -32,7 +34,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _pedidosServices.GetPedidoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -47,7 +49,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public async Task<IActionResult> OnPostAsync(string metodoNotificacao)
         {
-            _pedidosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _pedidosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var eCanal = (ECanalNotificacao)Enum.Parse(typeof(ECanalNotificacao), metodoNotificacao, true);
 
             var response = await _pedidosServices.GetPedidoByIdAsync(Pedido.Id);
@@ -70,7 +72,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         private void EnviarMensagemEmail(string emailDestinatario, string mensagemEnviar)
         {
-            // Configurações do servidor SMTP
+            // Configuraï¿½ï¿½es do servidor SMTP
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 465;
             string emailRemetente = "guilherme.glsantos@gmail.com";
@@ -82,7 +84,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
                 MailMessage mensagem = new MailMessage();
                 mensagem.From = new MailAddress(emailRemetente);
                 mensagem.To.Add(emailDestinatario);
-                mensagem.Subject = "Lembrete - Casa de Oração Yeshua";
+                mensagem.Subject = "Lembrete - Casa de Oraï¿½ï¿½o Yeshua";
                 mensagem.Body = mensagemEnviar;
                 mensagem.IsBodyHtml = true;
 
@@ -107,10 +109,10 @@ namespace Yeshuapp.Web.Pages.Pedidos
         {
             var mensagem = new StringBuilder();
 
-            mensagem.AppendLine($"Olá {pedido.Cliente.Nome}, tudo bem?");
-            mensagem.AppendLine($"Apenas gostaríamos de te lembrar que existe um pedido em aberto na casa de Oração Yeshua.");
+            mensagem.AppendLine($"Olï¿½ {pedido.Cliente.Nome}, tudo bem?");
+            mensagem.AppendLine($"Apenas gostarï¿½amos de te lembrar que existe um pedido em aberto na casa de Oraï¿½ï¿½o Yeshua.");
             mensagem.AppendLine($"Data do Pedido: {pedido.Data.ToShortDateString()}, Valor: {pedido.Valor}");
-            mensagem.AppendLine($"Se já tiver efetuado o pagamento, desconsidere essa mensagem");
+            mensagem.AppendLine($"Se jï¿½ tiver efetuado o pagamento, desconsidere essa mensagem");
 
             return mensagem.ToString();
 
@@ -118,7 +120,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
 
         public static void EnviarMensagemWhatsApp(string numero, string mensagem)
         {
-            // Remove caracteres indesejados do número
+            // Remove caracteres indesejados do nï¿½mero
             numero = numero.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
 
             if (!numero.StartsWith("11"))
@@ -133,7 +135,7 @@ namespace Yeshuapp.Web.Pages.Pedidos
             // Monta a URL para o wa.me
             string url = $"https://wa.me/{numero}?text={mensagemCodificada}";
 
-            // Abre a URL no navegador padrão
+            // Abre a URL no navegador padrï¿½o
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
     }

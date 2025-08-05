@@ -10,10 +10,12 @@ namespace Yeshuapp.Web.Pages.Irmaos
     {
         [BindProperty]
         public ClienteResponseDto Irmao { get; set; } = new ClienteResponseDto();
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IrmaosServices _irmaosServices;
 
-        public CreateModel(IrmaosServices irmaosServices)
+        public CreateModel(IrmaosServices irmaosServices,IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _irmaosServices = irmaosServices;
         }
 
@@ -21,7 +23,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
-            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             // Verifique se a imagem foi enviada
             if (imagemFile != null && imagemFile.Length > 0)
             {

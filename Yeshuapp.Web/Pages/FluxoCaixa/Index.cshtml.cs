@@ -7,13 +7,16 @@ namespace Yeshuapp.Web.Pages.FluxoCaixa
     {
         [BindProperty]
         public FluxoCaixaResponseDto Relatorio { get; set; }
-        public DateTime Inicio { get; set; } = DateTime.Now.AddDays(-7); // Últimos 7 dias
+        public DateTime Inicio { get; set; } = DateTime.Now.AddDays(-7); // ï¿½ltimos 7 dias
         public DateTime Fim { get; set; } = DateTime.Now;
 
         private readonly FluxoCaixaServices _fluxoCaixaServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(FluxoCaixaServices fluxoCaixaServices)
+        public IndexModel(FluxoCaixaServices fluxoCaixaServices,
+                        IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _fluxoCaixaServices = fluxoCaixaServices;
         }
         public async Task<IActionResult> OnGetAsync(DateTime? inicio, DateTime? fim)
@@ -21,7 +24,7 @@ namespace Yeshuapp.Web.Pages.FluxoCaixa
             Inicio = inicio ?? Inicio;
             Fim = fim ?? Fim;
 
-            var token = Request.Cookies["jwtToken"];
+            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");

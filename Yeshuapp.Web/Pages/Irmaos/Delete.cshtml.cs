@@ -10,12 +10,15 @@ namespace Yeshuapp.Web.Pages.Irmaos
         [BindProperty]
         public ClienteResponseDto Irmao { get; set; }
         private readonly IrmaosServices _irmaosServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private readonly JsonSerializerOptions options;
 
-        public DeleteModel(IrmaosServices irmaosServices)
+        public DeleteModel(IrmaosServices irmaosServices,
+                          IHttpContextAccessor httpContextAccessor)
         {
             _irmaosServices = irmaosServices;
+            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -25,7 +28,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _irmaosServices.GetIrmaoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -40,7 +43,7 @@ namespace Yeshuapp.Web.Pages.Irmaos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _irmaosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _irmaosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _irmaosServices.DeleteIrmaoAsync(Irmao.Id);
 
             if (response.IsSuccessStatusCode)

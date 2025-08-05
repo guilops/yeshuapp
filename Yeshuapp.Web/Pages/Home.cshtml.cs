@@ -7,18 +7,20 @@ namespace Yeshuapp.Web.Pages
     public class HomeModel : PageModel
     {
         private readonly FrasesServices _frasesServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         [BindProperty]
         public List<FraseDto> Frases { get; set; } = new List<FraseDto>();
 
-        public HomeModel(FrasesServices frasesServices)
+        public HomeModel(FrasesServices frasesServices,IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _frasesServices = frasesServices;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            _frasesServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _frasesServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var result = await _frasesServices.GetFrasesAsync();
 
             if (result.IsSuccessStatusCode)

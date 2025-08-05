@@ -11,14 +11,17 @@ namespace Yeshuapp.Web.Pages.Eventos
         public List<EventoDto>? Eventos { get; set; }
 
         private readonly EventosServices _eventosServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(EventosServices eventoServices)
+        public IndexModel(EventosServices eventoServices,
+                         IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _eventosServices = eventoServices;
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            var token = Request.Cookies["jwtToken"];
+            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");

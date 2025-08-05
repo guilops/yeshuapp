@@ -7,17 +7,19 @@ namespace Yeshuapp.Web.Pages.Produtos
     public class IndexModel : PageModel
     {
         private readonly ProdutosServices _produtosServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(ProdutosServices produtosServices)
+        public IndexModel(ProdutosServices produtosServices, IHttpContextAccessor httpContextAccessor)
         {
             _produtosServices = produtosServices;
+            _httpContextAccessor = httpContextAccessor;
         }
         [BindProperty]
         public List<ProdutoDto>? Produtos { get; set; } = new List<ProdutoDto>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var token = Request.Cookies["jwtToken"];
+            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Login");
@@ -40,10 +42,10 @@ namespace Yeshuapp.Web.Pages.Produtos
             if (string.IsNullOrEmpty(telefone))
                 return string.Empty;
 
-            // Remover caracteres não numéricos
+            // Remover caracteres nï¿½o numï¿½ricos
             telefone = telefone.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Replace(".", "");
 
-            // Verifica se o telefone possui o formato correto para a máscara
+            // Verifica se o telefone possui o formato correto para a mï¿½scara
             if (telefone.Length == 11) // Para celular
             {
                 return $"({telefone.Substring(0, 2)}) {telefone.Substring(2, 5)}-{telefone.Substring(7)}";
@@ -53,7 +55,7 @@ namespace Yeshuapp.Web.Pages.Produtos
                 return $"({telefone.Substring(0, 2)}) {telefone.Substring(2, 4)}-{telefone.Substring(6)}";
             }
 
-            return telefone; // Retorna sem formatação se não atender aos critérios
+            return telefone; // Retorna sem formataï¿½ï¿½o se nï¿½o atender aos critï¿½rios
         }
     }
 }

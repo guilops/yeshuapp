@@ -12,10 +12,13 @@ namespace Yeshuapp.Web.Pages.Eventos
         private readonly EventosServices _eventosServices;
 
         private readonly JsonSerializerOptions options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DeleteModel(EventosServices eventoServices)
+        public DeleteModel(EventosServices eventoServices,
+                           IHttpContextAccessor httpContextAccessor)
         {
             _eventosServices = eventoServices;
+            _httpContextAccessor = httpContextAccessor;
             options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -25,7 +28,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _eventosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _eventosServices.GetEventoByIdAsync(id);
 
             if (response.IsSuccessStatusCode)
@@ -40,7 +43,7 @@ namespace Yeshuapp.Web.Pages.Eventos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _eventosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
+            _eventosServices.SetAuthorizationHeader(_httpContextAccessor.HttpContext.Session.GetString("JwtToken"));
             var response = await _eventosServices.DeleteEventoAsync(Evento.Id);
 
             if (response.IsSuccessStatusCode)
