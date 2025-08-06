@@ -14,6 +14,7 @@ namespace Yeshuapp.Context
         public DbSet<EventosEntity> Eventos { get; set; }
         public DbSet<FrasesEntity> Frases { get; set; }
         public DbSet<FluxoCaixaEntity> FluxoCaixa { get; set; }
+        public DbSet<DespesasEntity> Despesas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,9 +23,17 @@ namespace Yeshuapp.Context
 
                 modelBuilder.Entity<FluxoCaixaEntity>()
                 .Property(e => e.Data)
+                .HasDefaultValueSql("NOW()")
                 .HasConversion(
                     v => v.ToUniversalTime(),
-                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));                 
+
+                modelBuilder.Entity<DespesasEntity>()
+                .Property(e => e.Data)
+                .HasDefaultValueSql("NOW()")
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));                                     
 
             base.OnModelCreating(modelBuilder);
         }

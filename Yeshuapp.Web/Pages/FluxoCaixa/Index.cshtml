@@ -34,7 +34,11 @@
             <div>
                 <p><strong>Total de Entradas:</strong> R$ @Model.Relatorio.TotalEntrada.ToString("N2")</p>
                 <p><strong>Total de Saídas:</strong> R$ @Model.Relatorio.TotalSaida.ToString("N2")</p>
-                <p><strong>Saldo Final:</strong> R$ @Model.Relatorio.Saldo.ToString("N2")</p>
+                @{
+                    var saldo = Model.Relatorio.Saldo;
+                    string saldoClass = saldo < 0 ? "text-danger" : saldo > 100 ? "text-success" : "text-warning";
+                }
+                <p><strong>Saldo Final:</strong> <span class="@saldoClass">R$ @saldo.ToString("N2")</span></p>
             </div>
 
             <h3>Detalhes</h3>

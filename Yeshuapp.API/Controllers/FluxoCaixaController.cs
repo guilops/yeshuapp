@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yeshuapp.Context;
@@ -19,24 +18,20 @@ public class FluxoCaixaController : ControllerBase
     public async Task<IActionResult> ObterRelatorioFluxoCaixa(
         [FromQuery] DateTime? dataInicio,
         [FromQuery] DateTime? dataFim,
-        [FromQuery] string tipo // "Entrada", "Sa�da" ou nulo para todos
+        [FromQuery] string tipo 
     )
     {
-        // Base da query
         var query = _context.FluxoCaixa.AsQueryable();
 
-        // Aplicar filtros de data
         if (dataInicio.HasValue)
             query = query.Where(fc => fc.Data >= dataInicio.Value);
 
         if (dataFim.HasValue)
             query = query.Where(fc => fc.Data <= dataFim.Value);
 
-        // Filtrar por tipo, se informado
         if (!string.IsNullOrEmpty(tipo))
             query = query.Where(fc => fc.Tipo == tipo);
 
-        // Obter resultados
         var resultado = await query
             .OrderBy(fc => fc.Data)
             .Select(fc => new FluxoCaixaDto
@@ -49,9 +44,10 @@ public class FluxoCaixaController : ControllerBase
             })
             .ToListAsync();
 
-        // Calcular totais
         var totalEntrada = resultado.Where(fc => fc.Tipo == "Entrada").Sum(fc => fc.Valor);
-        var totalSaida = resultado.Where(fc => fc.Tipo == "Sa�da").Sum(fc => fc.Valor);
+
+        var totalSaida = resultado.Where(fc => fc.Tipo != "Entrada").Sum(fc => fc.Valor);
+
 
         var resumo = new
         {

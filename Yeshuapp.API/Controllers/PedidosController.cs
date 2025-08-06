@@ -191,6 +191,7 @@ namespace Yeshuapp.Controllers
                 var fluxoCaixaEntity = new FluxoCaixaEntity
                 {
                     Tipo = "Entrada",
+                    Data = DateTime.SpecifyKind(pedidoEntity.Data, DateTimeKind.Utc),
                     Valor = pedidoEntity.Valor,
                     Origem = "Venda de Produtos",
                     Descricao = $"Pedido #{pedidoEntity.Id} - Cliente: #{pedidoEntity.Cliente.Nome}"

@@ -38,5 +38,10 @@
         {
             client.BaseAddress = baseAddress;
         });
+
+        services.AddHttpClient<DespesasServices>(client =>
+        {
+            client.BaseAddress = baseAddress;
+        });
     }
 }

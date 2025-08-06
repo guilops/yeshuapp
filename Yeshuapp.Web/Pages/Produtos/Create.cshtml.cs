@@ -20,7 +20,7 @@ namespace Yeshuapp.Web.Pages.Produtos
         public async Task<IActionResult> OnPostAsync(IFormFile imagemFile)
         {
             _produtosServices.SetAuthorizationHeader(Request.Cookies["jwtToken"]);
-            // Verifique se a imagem foi enviada
+            
             if (imagemFile != null && imagemFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
