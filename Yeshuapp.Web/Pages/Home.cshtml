@@ -29,7 +29,7 @@
         <div class="row justify-content-center">
             @if (Model.Eventos != null && Model.Eventos.Any())
             {
-                @foreach (var evento in Model.Eventos)
+                @foreach (var evento in Model.Eventos.Where(e => DateTime.Parse(e.Data) >= DateTime.Now).OrderBy(e => DateTime.Parse(e.Data)))
                 {
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm h-100 border-primary">
