@@ -13,7 +13,7 @@ public class ProdutosServices
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        urlBase = "https://yeshuapp.onrender.com";
+        urlBase = _configuration["baseApiUrl"];
     }
 
     public async Task<HttpResponseMessage> GetProdutosAsync()

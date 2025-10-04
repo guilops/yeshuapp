@@ -5,23 +5,20 @@ using Yeshuapp.Web.Dtos;
 
 namespace Yeshuapp.Web.Pages.Eventos
 {
-    public class IndexModel : PageModel
+    public class IndexDeslogadoModel : PageModel
     {
         [BindProperty]
         public List<EventoDto>? Eventos { get; set; }
 
         private readonly EventosServices _eventosServices;
 
-        public IndexModel(EventosServices eventoServices)
+        public IndexDeslogadoModel(EventosServices eventoServices)
         {
             _eventosServices = eventoServices;
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            var token = Request.Cookies["jwtToken"];
-            _eventosServices.SetAuthorizationHeader(token);
-
-            var result = await _eventosServices.GetEventosAsync(false);
+            var result = await _eventosServices.GetEventosAsync(true);
 
             if (!result.IsSuccessStatusCode)
                 return Page();

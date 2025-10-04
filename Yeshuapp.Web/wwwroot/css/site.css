@@ -20,3 +20,32 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Responsividade para telas pequenas */
+@media (max-width: 576px) {
+  .container, .container-fluid {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .table {
+    font-size: 0.95rem;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .card {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .btn, .btn-primary, .btn-danger, .btn-outline-secondary {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  h2, h3, h4 {
+    font-size: 1.2rem !important;
+  }
+  .eventos-section {
+    margin-top: 1rem !important;
+  }
+}

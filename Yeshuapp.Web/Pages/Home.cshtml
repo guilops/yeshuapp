@@ -12,7 +12,7 @@
     </h4>
 }
 
-<div class="text-center">
+<div class="container-fluid px-3 text-center">
     <br />
     @if (frase != null)
     {
@@ -31,7 +31,7 @@
             {
                 @foreach (var evento in Model.Eventos.Where(e => DateTime.Parse(e.Data) >= DateTime.Now).OrderBy(e => DateTime.Parse(e.Data)))
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-12 col-md-4 mb-4">
                         <div class="card shadow-sm h-100 border-primary">
                             <div class="card-header bg-primary text-white">
                                 <span style="font-size:1.1rem; font-weight:500;">@evento.Descricao</span>

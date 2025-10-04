@@ -43,5 +43,15 @@
         {
             client.BaseAddress = baseAddress;
         });
+
+        services.AddHttpClient<PedidoOracaoServices>(client =>
+        {
+            client.BaseAddress = baseAddress;
+        });
+
+        services.AddHttpClient<VisitanteServices>(client =>
+        {
+            client.BaseAddress = baseAddress;
+        });
     }
 }

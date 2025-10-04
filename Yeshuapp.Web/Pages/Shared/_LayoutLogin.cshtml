@@ -9,10 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #F4F4F9; /* Tom suave e acolhedor */
-            font-family: 'Cinzel', serif; /* Fonte amigável para um visual mais elegante */
+            background-color: #f7f3e9;
+            font-family: 'Cinzel', serif;
             margin: 0;
             padding: 0;
+            font-size: 15px;
         }
 
         header {
@@ -38,23 +39,26 @@
         }
 
         .login-container {
-            margin-top: 50px;
+            margin-top: 40px;
             background-color: #fff;
             border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 22px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            font-size: 1rem;
         }
 
         .form-control {
             border-radius: 4px;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
             background-color: #007bff;
             border: none;
             border-radius: 4px;
-            padding: 10px;
+            padding: 8px;
             width: 100%;
+            font-size: 0.98rem;
         }
 
             .btn-primary:hover {
@@ -65,10 +69,15 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light border-bottom">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a class="navbar-brand" asp-area="" asp-page="/Login">
                     <img src="~/logo3.png" alt="Logo" />
                 </a>
+                <div class="d-flex gap-2">
+                    <a href="/PedidoOracao/Create" class="btn btn-outline-primary btn-sm" role="button" aria-label="Pedir Oração">Peça sua Oração</a>
+                    <a href="/Visitantes/Create" class="btn btn-outline-primary btn-sm" role="button" aria-label="Cadastro Visitante">Sou visitante</a>
+                    <a href="/Eventos/IndexDeslogado" class="btn btn-outline-primary btn-sm" role="button" aria-label="Ver eventos">Acompanhe nossa agenda</a>
+                </div>
             </div>
         </nav>
     </header>

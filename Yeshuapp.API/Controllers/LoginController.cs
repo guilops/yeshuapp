@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Yeshuapp.Dtos;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Yeshuapp.Controllers
 {
@@ -46,10 +47,16 @@ namespace Yeshuapp.Controllers
         {
             var user = new IdentityUser
             {
+                UserName = createDto.Nome.Replace(" ","QQQ"), 
+                NormalizedUserName = createDto.Email.ToUpper(),
                 Email = createDto.Email,
-                UserName = createDto.Email,
-                PhoneNumber = createDto.Celular
+                PhoneNumber = createDto.Celular,
             };
+
+            var emailJaCadastrado = await _userManager.FindByEmailAsync(createDto.Email);
+
+            if (emailJaCadastrado is not null)
+                return StatusCode(500, $"E-mail informado já cadastrado");
 
             var result = await _userManager.CreateAsync(user, createDto.Senha);
 
@@ -76,7 +83,7 @@ namespace Yeshuapp.Controllers
             {
                 var claims = new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

@@ -12,8 +12,7 @@ public class AutenticacaoServices
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        //urlBase = _configuration["baseApiUrl"];
-        urlBase = "https://yeshuapp.onrender.com";
+        urlBase = _configuration["baseApiUrl"];
         
     }
 

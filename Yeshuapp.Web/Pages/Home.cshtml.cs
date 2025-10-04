@@ -32,7 +32,9 @@ namespace Yeshuapp.Web.Pages
 
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
-            var username = token.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.NameId)?.Value;
+            var username = token.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name)?.Value;
+
+            username = username.Replace("QQQ", " ");
 
             var fusoHorario = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
             var horaBrasilia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, fusoHorario);
@@ -57,11 +59,14 @@ namespace Yeshuapp.Web.Pages
                 Frases = await result.Content.ReadFromJsonAsync<List<FraseDto>>();
 
                 Random random = new Random();
-                var eventos = await eventosResult.Content.ReadFromJsonAsync<List<EventoDto>>();
 
-                if (eventos != null && eventos.Any())
-                    Eventos = eventos.OrderBy(e => random.Next()).Take(3).ToList();
-                
+                if (eventosResult.IsSuccessStatusCode)
+                {
+                    var eventos = await eventosResult.Content.ReadFromJsonAsync<List<EventoDto>>();
+
+                    if (eventos != null && eventos.Any())
+                        Eventos = eventos.OrderBy(e => random.Next()).Take(3).ToList();
+                }
 
                 return Page();
             }

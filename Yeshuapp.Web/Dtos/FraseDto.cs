@@ -9,4 +9,18 @@
         public string Versiculo { get; set; }
         public bool Ativa { get; set; }
     }
+
+    public class PedidoOracaoDto
+    {
+        public string Mensagem { get; set; }
+    }
+
+    public class VisitanteDto
+    {
+        public string Name { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public string? Notes { get; set; }
+        public bool WantsContact { get; set; } = false;
+    }
 }

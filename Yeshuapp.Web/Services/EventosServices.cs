@@ -12,12 +12,15 @@ public class EventosServices
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        urlBase = "https://yeshuapp.onrender.com";
+        urlBase = _configuration["baseApiUrl"];
     }
 
-    public async Task<HttpResponseMessage> GetEventosAsync()
+    public async Task<HttpResponseMessage> GetEventosAsync(bool filtrarAbertos = false)
     {
-       return await _httpClient.GetAsync($"{urlBase}/eventos");
+        var url = $"{urlBase}/eventos";
+        if (filtrarAbertos)
+            url += "/abertos";
+        return await _httpClient.GetAsync(url);
     }
 
     public async Task<HttpResponseMessage> GetEventoByIdAsync(int id)

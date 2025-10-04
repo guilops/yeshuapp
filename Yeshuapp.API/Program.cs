@@ -12,6 +12,15 @@ using Yeshuapp.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ----------------------------
+// 🔹 Swagger
+// ----------------------------
+builder.Services.AddSwaggerGen(); // 👈 registra o SwaggerProvider
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
+// ----------------------------
+// 🔹 API Versioning
+// ----------------------------
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -25,34 +34,37 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-var config = new ConfigurationBuilder()
-          .SetBasePath(AppContext.BaseDirectory) 
-          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) 
-          .Build();
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddDbContext<IdentityContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-       .AddEntityFrameworkStores<IdentityContext>()
-       .AddDefaultTokenProviders();
-
+// ----------------------------
+// 🔹 Controllers + JSON Config
+// ----------------------------
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
+
+// ----------------------------
+// 🔹 EF Core + MySQL
+// ----------------------------
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
+);
+
+// ----------------------------
+// 🔹 Identity + Roles
+// ----------------------------
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
+// ----------------------------
+// 🔹 JWT Auth
+// ----------------------------
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
 builder.Services.AddAuthentication(options =>
 {
@@ -71,48 +83,29 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("'v'VVV", new OpenApiInfo { Title = "Yeshuapp API", Version = "'v'VVV" });
-
-    // Adicione a defini��o do esquema de seguran�a JWT
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Insira o token JWT no formato 'Bearer {token}'"
-    });
-
-    // Adicione um requisito de seguran�a para os endpoints
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                },
-                Array.Empty<string>()
-            }
-        });
-});
-
+// ----------------------------
+// 🔹 CORS
+// ----------------------------
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy", builder =>
+    options.AddPolicy("CorsPolicy", policy =>
     {
-        builder.WithOrigins("https://yeshuapp-front.onrender.com")
-               .AllowAnyHeader()
-               .AllowAnyMethod()
-               .AllowCredentials();
+        policy.WithOrigins(
+                "https://yeshuapp-front.onrender.com",
+                "https://localhost:7179",
+                "http://localhost:5173",
+                "https://localhost:5001")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
-
 
 var app = builder.Build();
 
+// ----------------------------
+// 🔹 Pipeline
+// ----------------------------
 app.UseCors("CorsPolicy");
 
 var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -131,11 +124,17 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// por padrão exige auth em tudo, exceto se marcar [AllowAnonymous]
 app.MapControllers().RequireAuthorization();
+
+// 🔹 Seed de usuário Admin (executado ao iniciar)
+await IdentitySeed.SeedAdminAsync(app);
 
 app.Run();
 
-
+// ----------------------------
+// 🔹 Classes auxiliares
+// ----------------------------
 public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 {
     private readonly IApiVersionDescriptionProvider _provider;
@@ -151,7 +150,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         {
             options.SwaggerDoc(desc.GroupName, new OpenApiInfo
             {
-                Title = $"yeshuappAPI - Versão {desc.ApiVersion}",
+                Title = $"Yeshuapp API - Versão {desc.ApiVersion}",
                 Version = desc.ApiVersion.ToString(),
                 Description = "Documentação gerada automaticamente",
                 Contact = new OpenApiContact
@@ -160,6 +159,52 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                     Email = "guilherme.glsantos@gmail.com"
                 },
             });
+        }
+
+        // 🔹 Configuração de segurança para JWT
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "Insira o token JWT no formato: Bearer {token}"
+        });
+
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                },
+                Array.Empty<string>()
+            }
+        });
+    }
+}
+
+public static class IdentitySeed
+{
+    public static async Task SeedAdminAsync(IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        string adminEmail = "admin@igreja.com";
+        string adminPassword = "Admin@123";
+
+        if (!await roleManager.RoleExistsAsync("Admin"))
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+        var admin = await userManager.FindByEmailAsync(adminEmail);
+        if (admin == null)
+        {
+            admin = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+            await userManager.CreateAsync(admin, adminPassword);
+            await userManager.AddToRoleAsync(admin, "Admin");
         }
     }
 }

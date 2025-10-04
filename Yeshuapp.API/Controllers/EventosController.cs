@@ -9,7 +9,7 @@ namespace Yeshuapp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    
+
     public class EventosController : ControllerBase
     {
         private readonly ILogger<EventosController> _logger;
@@ -23,20 +23,32 @@ namespace Yeshuapp.Controllers
 
         [HttpGet("/eventos")]
         // [MapToApiVersion("2.0")]
-        public IActionResult ListarProdutos()
+        public IActionResult ListarEventos()
         {
-            var result = _context.Eventos.ToList();
+            var eventos = _context.Eventos.ToList();
 
-            if (result.Count == 0) return NotFound("Eventos n�o localizados");
+            if (eventos.Count == 0) return NotFound("Eventos não localizados");
 
-            return Ok(result);
+            return Ok(eventos);
+        }
+
+
+        [HttpGet("/eventos/abertos")]
+        [AllowAnonymous]
+        public IActionResult ListarEventosAbertos()
+        {
+            var eventos = _context.Eventos.Where(x => x.TipoEvento == API.Enums.ETipoEvento.Aberto).ToList();
+
+            if (eventos.Count == 0) return NotFound("Eventos não localizados");
+
+            return Ok(eventos);
         }
 
         [HttpGet("/eventos/{id:int}")]
         [MapToApiVersion("1.0")]
         public IActionResult ListarProdutosPorId(int id)
         {
-            var produtosEntity = _context.Eventos.FirstOrDefault(x=> x.Id == id);
+            var produtosEntity = _context.Eventos.FirstOrDefault(x => x.Id == id);
 
             if (produtosEntity is null) return NotFound("Eventos n�o localizado");
 
@@ -51,7 +63,7 @@ namespace Yeshuapp.Controllers
                 Data = evento.Data,
                 Descricao = evento.Descricao,
                 TipoEvento = evento.TipoEvento,
-                Horario = evento.Horario,   
+                Horario = evento.Horario,
                 Detalhes = evento.Detalhes
             };
             _context.Eventos.Add(eventoEntity);
@@ -63,7 +75,7 @@ namespace Yeshuapp.Controllers
         [HttpPut("/eventos/{id}")]
         public async Task<IActionResult> AtualizarEvento(int id, EventoDto evento)
         {
-            var pedidoEntity = _context.Eventos.FirstOrDefaultAsync(x=> x.Id==id).Result;    
+            var pedidoEntity = _context.Eventos.FirstOrDefaultAsync(x => x.Id == id).Result;
 
             if (pedidoEntity is null) return NotFound("Evento n�o localizado");
 
@@ -72,7 +84,7 @@ namespace Yeshuapp.Controllers
             pedidoEntity.TipoEvento = evento.TipoEvento;
             pedidoEntity.Horario = evento.Horario;
             pedidoEntity.Detalhes = evento.Detalhes;
-           
+
             _context.Eventos.Update(pedidoEntity);
             await _context.SaveChangesAsync();
 

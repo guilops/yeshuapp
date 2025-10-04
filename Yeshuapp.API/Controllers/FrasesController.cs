@@ -42,6 +42,7 @@ namespace Yeshuapp.Controllers
 
 
         [HttpPost("/frases/lista")]
+        [AllowAnonymous]
         public async Task<IActionResult> SalvarFrases(List<FraseDto> frases)
         {
             foreach (var frase in frases)
@@ -72,6 +73,7 @@ namespace Yeshuapp.Controllers
         }
 
         [HttpPost("/frases")]
+        [AllowAnonymous]
         public async Task<IActionResult> SalvarFrase(FraseDto frase)
         {
             var fraseEntity = new FrasesEntity
