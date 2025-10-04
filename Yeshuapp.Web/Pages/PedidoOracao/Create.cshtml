@@ -58,30 +58,31 @@
 </head>
 
 <body>
-<link rel="stylesheet" href="~/css/site.css" />
-<div class="container">
-    <h3>Pedido de Oração (Anônimo)</h3>
-    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-    {
-        <div class="alert alert-danger" role="alert">
-            @Model.ErrorMessage
-        </div>
-    }
-    <form method="post">
-        @Html.AntiForgeryToken()
-        <div class="form-group mb-4">
-            <label asp-for="PedidoOracaoDto.Mensagem" class="mb-2">Mensagem</label>
-            <textarea asp-for="PedidoOracaoDto.Mensagem" class="form-control" rows="5" placeholder="Digite seu pedido de oração..."></textarea>
-            <span asp-validation-for="PedidoOracaoDto.Mensagem" class="text-danger"></span>
-
-                <div class="text-center">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <div class="container">
+        <h3>Pedido de Oração (Anônimo)</h3>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.ErrorMessage
+            </div>
+        }
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-4">
+                <label asp-for="PedidoOracaoDto.Mensagem" class="mb-2">Mensagem</label>
+                <textarea asp-for="PedidoOracaoDto.Mensagem" class="form-control" rows="5" placeholder="Digite seu pedido de oração..."></textarea>
+                <span asp-validation-for="PedidoOracaoDto.Mensagem" class="text-danger"></span>
+                <br />
+            </div>
+            <div class="text-center">
                 <button type="submit" class="btn btn-outline-primary" onclick="btnAlerta()">Salvar</button>
                 <br>
                 <br>
                 <a asp-page="/Login" class="btn btn-outline-primary">Voltar</a>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <script lang="javascript">
         function btnAlerta() {
@@ -89,7 +90,7 @@
         }
     </script>
 
-</div>
+    </div>
 
 </body>
 </html>
