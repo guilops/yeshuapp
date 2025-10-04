@@ -57,58 +57,59 @@
 </head>
 <body>
 
-<link rel="stylesheet" href="~/css/site.css" />
-<div class="container">
-    <h3>Olá visitante, que tal deixar sua visita registrada? </h1>
-    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-    {
-        <div class="card">@Model.ErrorMessage</div>
-    }
-    <form method="post">
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            <div class="mb-3">
-                <label asp-for="VisitanteDto.Name" class="form-label">Nome</label>
-                <input asp-for="VisitanteDto.Name" class="form-control" required minlength="2" maxlength="120" />
-                <span asp-validation-for="VisitanteDto.Name" class="text-danger"></span>
-            </div>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <div class="container">
+        <h3>
+            Olá visitante, que tal deixar sua visita registrada? </h1>
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="card">@Model.ErrorMessage</div>
+            }
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label asp-for="VisitanteDto.Name" class="form-label">Nome</label>
+                        <input asp-for="VisitanteDto.Name" class="form-control" required minlength="2" maxlength="120" />
+                        <span asp-validation-for="VisitanteDto.Name" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="VisitanteDto.Email" class="form-label">E-mail (opcional)</label>
-                <input asp-for="VisitanteDto.Email" class="form-control" type="email" />
-                <span asp-validation-for="VisitanteDto.Email" class="text-danger"></span>
-            </div>
+                    <div class="mb-3">
+                        <label asp-for="VisitanteDto.Email" class="form-label">E-mail (opcional)</label>
+                        <input asp-for="VisitanteDto.Email" class="form-control" type="email" />
+                        <span asp-validation-for="VisitanteDto.Email" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="VisitanteDto.Phone" class="form-label">Telefone (opcional)</label>
-                <input asp-for="VisitanteDto.Phone" class="form-control" />
-                <span asp-validation-for="VisitanteDto.Phone" class="text-danger"></span>
-            </div>
+                    <div class="mb-3">
+                        <label asp-for="VisitanteDto.Phone" class="form-label">Telefone (opcional)</label>
+                        <input asp-for="VisitanteDto.Phone" class="form-control" />
+                        <span asp-validation-for="VisitanteDto.Phone" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="VisitanteDto.Notes" class="form-label">Observações (opcional)</label>
-                <textarea asp-for="VisitanteDto.Notes" class="form-control" rows="4" maxlength="1000"></textarea>
-                <span asp-validation-for="VisitanteDto.Notes" class="text-danger"></span>
-            </div>
+                    <div class="mb-3">
+                        <label asp-for="VisitanteDto.Notes" class="form-label">Observações (opcional)</label>
+                        <textarea asp-for="VisitanteDto.Notes" class="form-control" rows="4" maxlength="1000"></textarea>
+                        <span asp-validation-for="VisitanteDto.Notes" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3 form-check">
-                <input asp-for="VisitanteDto.WantsContact" class="form-check-input" type="checkbox" />
-                <label asp-for="VisitanteDto.WantsContact" class="form-check-label">Desejo ser contatado por um irmão para receber mais informações sobre a igreja e eventos</label>
-                <span asp-validation-for="VisitanteDto.WantsContact" class="text-danger"></span>
-            </div>
-        
+                    <div class="mb-3 form-check">
+                        <input asp-for="VisitanteDto.WantsContact" class="form-check-input" type="checkbox" />
+                        <label asp-for="VisitanteDto.WantsContact" class="form-check-label">Desejo ser contatado por um irmão para receber mais informações sobre a igreja e eventos</label>
+                        <span asp-validation-for="VisitanteDto.WantsContact" class="text-danger"></span>
+                    </div>
 
-        <div class="text-center">
-                <button class="btn btn-primary" type="submit">Enviar</button>
-                <br>
-                <br>
-                <a asp-page="/Login" class="btn btn-outline-primary">Voltar</a>
-        </div>
 
-        </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                        <br>
+                        <br>
+                        <a asp-page="/Login" class="btn btn-outline-primary">Voltar</a>
+                    </div>
 
-    </form>
-</div>
+                </div>
+
+            </form>
+    </div>
 
 </body>
 </html>
